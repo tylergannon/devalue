@@ -6,13 +6,12 @@ version that produced it. `go test` reads it and never runs Node.
 
 ## The pin
 
-Each polytype release is feature-equivalent to exactly one devalue release,
-named in three places that `TestUpstreamVersion` requires to agree:
+This module is feature-equivalent to exactly one devalue release, named in
+three places that `TestUpstreamVersion` requires to agree:
 
-- `devalue.UpstreamVersion` in `devalue/version.go`, the promise the Go API
-  publishes;
-- `devDependencies.devalue` in the repository root `package.json`, an exact
-  version and the one the recorder installs;
+- `UpstreamVersion` in `version.go`, the promise the Go API publishes;
+- `devDependencies.devalue` in this module's `package.json`, an exact version
+  and the one the recorder installs;
 - the `devalue` field of `golden.json`, written by the recorder from the
   installed package.
 
@@ -20,29 +19,35 @@ named in three places that `TestUpstreamVersion` requires to agree:
 
 ## Regenerate
 
-With the root packages installed (`npm ci` at the repository root):
+From this module's directory, with its packages installed (`pnpm install`):
 
 ```sh
-go run ./devalue/testdata/record && node devalue/testdata/record/record.mjs
+go run ./testdata/record && node testdata/record/record.mjs
 ```
+
+Without edits to `main.go` or the pin, this reproduces `golden.json` byte for
+byte.
 
 ## Moving to a newer devalue
 
-1. Pick the target from what consumers run, not from upstream's latest:
+A newer release within this module's upstream major is a minor release of
+this module. A new upstream major gets its own module directory; see the
+repository's `AGENTS.md`.
+
+1. Pick the target from what consumers run, not from upstream's latest.
    SvelteKit renders with the devalue its own dependency range resolves, and a
    Go server mirroring SvelteKit needs output byte-equal to that.
-   Read every upstream change between the current pin and the target release:
+2. Read every upstream change between the current pin and the target release:
    the GitHub release notes, the published source diff, and the
-   `test/index.test.js` expectations.
-2. Bump the root `package.json` pin and its lockfile, and `UpstreamVersion`.
-3. Re-record `golden.json`. Recorded cases that change show which outputs
+   `test/index.test.js` expectations. Record the map under `ephemeral/`.
+3. Bump the `package.json` pin (`pnpm add -D devalue@<version> --save-exact`)
+   and `UpstreamVersion`.
+4. Re-record `golden.json`. Recorded cases that change show which outputs
    moved. The corpus does not cover every changed behavior, so extend
-   `main.go` with any value shapes the release changed that it does not
-   yet generate.
-4. Port the changes, re-port the `uneval_test.go` expectations from the new
-   release's tests, and update the version named in the docs.
-5. Before releasing, run each downstream consumer's tests (skgo at minimum)
-   against the branch through a `go.work` that uses both checkouts. Keep the
-   exported API compatible: when upstream changes an API such as the
-   `uneval` replacer, add the new form alongside `Replacer`/`UnevalWith`
-   rather than changing them.
+   `main.go` with any value shapes the release changed that it does not yet
+   generate.
+5. Port the changes, re-port the `uneval_test.go` expectations from the new
+   release's tests, and update the version named in the README.
+6. Before releasing, run each downstream consumer's tests (polytype's
+   `devalue/codegen`, skgo) against the change through a `go.work` that uses
+   both checkouts.

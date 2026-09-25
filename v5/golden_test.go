@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/tylergannon/polytype/devalue"
+	"github.com/tylergannon/devalue/v5"
 )
 
 // golden is testdata/golden.json: the devalue release that recorded it and
@@ -34,7 +34,7 @@ func TestUpstreamVersion(t *testing.T) {
 		t.Errorf("testdata/golden.json was recorded from devalue %q, but UpstreamVersion is %q; re-record it (testdata/record/README.md)", recorded, devalue.UpstreamVersion)
 	}
 
-	contents, err := os.ReadFile("../package.json")
+	contents, err := os.ReadFile("package.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -49,7 +49,7 @@ func TestUpstreamVersion(t *testing.T) {
 	}
 }
 
-// TestUnevalGolden compares Polytype's expression serializer with the pinned
+// TestUnevalGolden compares the expression serializer with the pinned
 // devalue implementation for every value shared with the flat format.
 func TestUnevalGolden(t *testing.T) {
 	t.Parallel()

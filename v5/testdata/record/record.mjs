@@ -11,11 +11,11 @@ const here = dirname(fileURLToPath(import.meta.url));
 
 // The golden is only evidence of parity with the pinned release, so refuse to
 // record from any other installed version.
-const pinned = JSON.parse(readFileSync(join(here, "..", "..", "..", "package.json"), "utf8"))
+const pinned = JSON.parse(readFileSync(join(here, "..", "..", "package.json"), "utf8"))
   .devDependencies.devalue;
 const installed = installedVersion();
 if (installed !== pinned) {
-  throw new Error(`installed devalue ${installed} is not the pinned ${pinned}; reinstall the repository root's packages`);
+  throw new Error(`installed devalue ${installed} is not the pinned ${pinned}; run pnpm install in this module`);
 }
 
 const seen = new Set();

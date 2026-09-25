@@ -1,0 +1,9 @@
+{
+  "name": "devalue-go-v5-dev",
+  "private": true,
+  "type": "module",
+  "description": "Development-only pin: the devalue release this module's goldens are recorded against. `go test` never needs it.",
+  "devDependencies": {
+    "devalue": "5.9.4"
+  }
+}
