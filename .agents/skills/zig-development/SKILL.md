@@ -6,10 +6,14 @@ description: Write and test the Zig devalue package using its pinned compiler, v
 # Zig development
 
 Use the version in the repository's `mise.toml` (currently 0.17.0). Run
-`mise install` on a new machine, then `mise exec -- zig version`. An unqualified
-`zig` may still resolve to an older Homebrew installation.
+`mise install` on a new machine, then `mise exec -- zig version`. Use mise for
+the reproducible project toolchain; verify any other compiler with `zig version`.
 
 ## Resolve APIs against the compiler
+
+For current language and API changes, use the updated
+[Zig 0.17 skill](../zigcc/zig-0-17/SKILL.md). This skill adds the devalue-specific
+toolchain, ownership, fixture, and benchmark constraints.
 
 Run `mise exec -- zig env` to locate `std_dir` and `lib_dir`. Search the relevant
 installed source and its tests with `rg`; compile a small probe when a signature
