@@ -19,3 +19,35 @@ correction: Fable round 01 found Zig absent from aggregate/CI gates, ambiguous s
 decision: Native probe verifies test-runtime fixture access from a separate Zig build root and 0.17 scanner rejection of raw WTF-8/unpaired surrogate escapes. These are setup/design evidence, not codec parity or performance proof.
 correction: Fable round 02 showed valid custom cycles are resolved in 5.9.4 and a self-reference may invoke its reviver twice with a partial payload -> preserve that source behavior explicitly and require the two upstream circularCustomTypes tests plus infinite-payload rejection. Reducer-once assumptions do not apply to revivers.
 decision: Claude Fable 5.1 round 03 reached only nitpicks remain; plan consensus achieved after four material findings were resolved. Final RegExp/Date metadata clarifications were folded into the test contract. This is planning readiness only, with codec implementation and runtime proof still pending.
+
+## Implementation request
+
+scope: User authorized building the reviewed Zig package and implementation consensus with Claude Opus; explicitly rejected elaborate proof machinery. Use native tests, upstream fixtures, scratch Go comparison and a real local-path public consumer.
+friction: Installed `agent` automatically overrides CLI model flags when CODEX_THREAD_ID is present. Explicit user-requested Opus requires standalone selection with those caller-detection environment variables unset; CLI `opus` alias is documented as the latest Opus in installed Claude help. This is a user-authorized override of automatic reviewer selection, not a tool change.
+decision: First decoder uses Zig's iterative JSON parser as a temporary wire tree plus an owned devalue graph. This is simpler than a new JSON scanner; measure the cost before specializing. The wire tree is released before returning. Resource nesting/traversal limits are explicit.
+friction: Zig numeric zero-padding of signed positive integers emits a plus sign; Date fields must be unsigned magnitudes. Native date fixture exposed this immediately.
+decision: Ordinary increasing array insertion now appends directly, removing measured quadratic decode scanning. Aliased 1,000-element decoding improved from ~163us to ~34us in initial samples; timings and allocation traffic stay in the tracked benchmark report rather than claims infrastructure.
+decision: Shared fixture corpus expanded from 359 to 368 through the existing pinned upstream recorder; Zig-only corpus currently has 34 independent native constructors. Scratch Go comparator confirms shared documents and actual public Zig consumer output in both v5/v6; distinct identities outside Go representability are validated natively.
+correction: Upstream reducer tag names are interpolated raw, unlike ordinary strings. JSON-safe names containing `<` or U+2028 must retain those exact bytes; applying normal devalue string escaping broke parity. Added a pinned JS fixture/native-constructor regression and kept invalid quote/backslash/control/UTF-8 rejection explicit.
+review_finding: Opus reproduced a stale Zig test-run cache: changing runtime corpus/version metadata alone reused a cached success. Set the test Run step's has_side_effects=true, then warmed the cache, corrupted only corpus metadata and confirmed rejection without source/cache changes. Restored the exact fixture and confirmed success. This is a native build-step fix, not a new proof framework.
+
+### User correction: reconsider the implementation before continuing
+
+The user challenged the collection complexity and missing upstream robustness
+coverage. Paused further production changes and audited installed Zig 0.17
+containers and all six upstream v5.9.4 test files. Zig has both ordinary and
+insertion-ordered hash maps; there is no need for a custom bucket table.
+Preserving upstream wire traversal did not justify replacing hashed lookups with
+linear scans. Binary search would not fix repeated sorted insertion costs.
+
+The prior corpus figure overstated the breadth of behavioral evidence: round
+trips do not independently prove encoder inputs, decoder semantics, hostile
+input handling, or collection scaling. The next work must port all applicable
+upstream cases, including relevant invariants in operations-override tests,
+and explicitly identify features excluded by the approved profile. Wrote
+`ephemeral/zig-implementation-reconsideration.md` with the audit and resumption
+conditions. The current hash-index/scanner revision remains uncommitted and
+unaccepted; comparative timings and Opus re-review are still outstanding.
+
+correction: User made full pinned-upstream behavioral test fidelity a before-landing requirement. Tooling-only/language-specific mechanics may be excluded, but applicable native codec invariants must be retained. Existing feature/profile omissions cannot silently waive behavioral tests; reconcile them before claiming parity. Ports need not all happen immediately.
+correction: User prioritized correct behavior and a usable first version, with efficiency work afterward. Do not turn optimal descending insertion complexity or allocation tuning into an initial readiness gate. Keep upstream resource-safety regression behavior distinct from general performance optimization. Updated the development plan and reconsideration note accordingly; production implementation remains paused during this clarification.

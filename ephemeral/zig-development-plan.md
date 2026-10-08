@@ -19,6 +19,22 @@ and measure performance before optimizing. Comptime may later specialize typed
 Zig adapters using the same wire rules. This assignment prepares and reviews
 the plan; codec implementation starts after this planning phase.
 
+User clarification (2026-10-07): before landing, use the pinned upstream's full
+behavioral test suite, ported or adapted to native Zig, with no lower test
+fidelity. Tooling-only and language-specific mechanics may be excluded, but
+their applicable codec invariants must still be tested. An unimplemented
+behavior is not by itself a reason to omit its upstream test. Reconcile the
+existing profile exclusions with this requirement before landing rather than
+claiming full behavioral parity from a narrower corpus. This requirement does
+not require completing all ports immediately.
+
+Prioritize correct behavior and a usable first library version. Performance
+optimization follows once that version works and can be used. Descending or
+otherwise adversarial insertion orders belong in correctness tests, but optimal
+complexity for every order is not an initial acceptance criterion. Preserve
+upstream resource-safety behavior without making general speed optimization a
+prerequisite for the first working version.
+
 ## Scope and contracts
 
 The initial supported values are null, undefined, booleans, JavaScript f64
@@ -242,7 +258,8 @@ Zig ownership differences. Record compiler/toolchain, CPU, optimization modes,
 payload/output sizes, repeated-run time distributions, and allocation counts/
 bytes. Report results separately by workload, not as a universal language claim.
 
-Optimize only measured bottlenecks while preserving parity and memory behavior.
+Defer performance optimization until the first correct, usable version exists;
+then optimize only measured bottlenecks while preserving parity and memory behavior.
 No arbitrary speed multiple is a readiness requirement. If results do not support
 the intended speed advantage, state that and identify the measured bottleneck;
 do not call the package fast on the strength of its implementation language.
@@ -259,6 +276,14 @@ tagging, and publishing are later explicitly scoped work.
 Tests belong in Zig. Pinned JavaScript may generate expected fixture data;
 it is never invoked by `zig build test` or `go test`. Do not use a JavaScript
 interpreter, generated ledgers, or copied Go outputs as an expected-value oracle.
+
+Before landing, port or adapt the complete pinned upstream behavioral suite,
+including malformed-input and resource-safety regressions. Preserve each test's
+behavioral assertions and edge cases; round-trip goldens do not replace them.
+Only tooling-only or language-specific details may be excluded, with the reason
+stated alongside the affected native tests or in a short human-written note.
+Adapt equivalent native behavior where JavaScript mechanics differ. Resolve any
+remaining feature/profile mismatch explicitly before claiming upstream parity.
 
 | Behavior | Evidence that can fail independently |
 | --- | --- |
@@ -286,6 +311,9 @@ documented, all milestone evidence above exists, native tests and formatting
 pass under the pinned compiler, `just test` and `just lint` pass, benchmarks
 honestly describe the results, and implementation/proof consensus has no material
 findings. Plan consensus does not prove runtime behavior or shipping readiness.
+Landing additionally requires the full upstream behavioral test fidelity stated
+above. Performance tuning is deferred work, not a prerequisite for a correct,
+usable first version.
 
 - Repository `AGENTS.md` and `zig/AGENTS.md`; user-approved scope in this plan.
 - [Pinned upstream source](https://github.com/sveltejs/devalue/tree/v5.9.4),
