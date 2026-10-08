@@ -19,6 +19,20 @@ fn repeated(g: *d.Graph, v: d.Value) !d.Value {
     return result;
 }
 fn fixtureValue(g: *d.Graph, name: []const u8) !d.Value {
+    if (std.mem.eql(u8, name, "empty_shared")) {
+        const b = try g.arrayBuffer("");
+        const v = try g.typedArray(.Uint8Array, b, 0, 0);
+        const root = try g.object(false);
+        try g.put(root, "buffer", b);
+        try g.put(root, "view", v);
+        try g.put(root, "again", v);
+        try g.put(root, "distinct", try g.typedArray(.Uint8Array, b, 0, 0));
+        try g.put(root, "data", try g.dataView(b, 0, 0));
+        try g.put(root, "separate", try g.arrayBuffer(""));
+        try g.put(root, "self", root);
+        return root;
+    }
+    if (std.mem.eql(u8, name, "float16_values")) return g.typedArray(.Float16Array, try g.arrayBuffer(&.{ 0, 0, 0, 128, 0, 60, 1, 0, 255, 3, 0, 4, 255, 123, 0, 124, 0, 252, 1, 126 }), 0, 10);
     var kind: ?d.TypedArrayKind = null;
     var suffix: ?[]const u8 = null;
     for (kinds) |k| {
@@ -132,7 +146,7 @@ test "all upstream binary fixtures independently encoded and decoded" {
     const corpus = try std.json.parseFromSlice(struct { devalue: []const u8, cases: []Case }, a, bytes, .{});
     defer corpus.deinit();
     try std.testing.expectEqualStrings(d.upstream_version, corpus.value.devalue);
-    try std.testing.expectEqual(@as(usize, 109), corpus.value.cases.len);
+    try std.testing.expectEqual(@as(usize, 111), corpus.value.cases.len);
     for (corpus.value.cases) |case| {
         var expected = d.Graph.init(a);
         defer expected.deinit();
@@ -166,6 +180,66 @@ fn reduceView(_: ?*anyopaque, g: *d.Graph, v: d.Value) d.Error!?d.Value {
 }
 fn reduceBuffer(_: ?*anyopaque, g: *d.Graph, v: d.Value) d.Error!?d.Value {
     return if (v == .ref and (try g.node(v)) == .array_buffer) try g.string("payload") else null;
+}
+
+test "Go Zig binary exchange" {
+    const dir = @import("fixtures").interop_dir;
+    if (dir.len == 0) return error.SkipZigTest;
+    const Case = struct { name: []const u8, devalue: []const u8 };
+    const Corpus = struct { devalue: []const u8, cases: []Case };
+    const golden_bytes = try std.Io.Dir.cwd().readFileAlloc(std.testing.io, "testdata/binary-golden.json", a, .limited(1024 * 1024));
+    defer a.free(golden_bytes);
+    const golden = try std.json.parseFromSlice(Corpus, a, golden_bytes, .{});
+    defer golden.deinit();
+    try std.testing.expectEqualStrings(d.upstream_version, golden.value.devalue);
+    try std.testing.expectEqual(@as(usize, 111), golden.value.cases.len);
+    for ([_][]const u8{ "v5", "v6" }) |module| {
+        const path = try a.print("{s}/{s}.json", .{ dir, module });
+        defer a.free(path);
+        const bytes = try std.Io.Dir.cwd().readFileAlloc(std.testing.io, path, a, .limited(1024 * 1024));
+        defer a.free(bytes);
+        const peer = try std.json.parseFromSlice(Corpus, a, bytes, .{});
+        defer peer.deinit();
+        try std.testing.expectEqualStrings(d.upstream_version, peer.value.devalue);
+        try std.testing.expectEqual(golden.value.cases.len, peer.value.cases.len);
+        for (peer.value.cases, golden.value.cases) |case, recorded| {
+            try std.testing.expectEqualStrings(recorded.name, case.name);
+            try std.testing.expectEqualStrings(recorded.devalue, case.devalue);
+            var expected = d.Graph.init(a);
+            defer expected.deinit();
+            const value = try fixtureValue(&expected, case.name);
+            if (std.mem.eql(u8, case.name, "reduced_view")) {
+                var result = try d.parse(a, case.devalue, &.{.{ .name = "View", .revive = identity }});
+                defer result.deinit();
+                try std.testing.expectEqualStrings("payload", result.value.string);
+            } else if (std.mem.eql(u8, case.name, "reduced_buffer")) {
+                try std.testing.expectError(error.InvalidDocument, d.parse(a, case.devalue, &.{.{ .name = "Raw", .revive = identity }}));
+            } else {
+                var actual = try d.parse(a, case.devalue, &.{});
+                defer actual.deinit();
+                try topology.equal(&expected, value, &actual.graph, actual.value);
+            }
+        }
+    }
+    // Construct fresh Zig graphs; never use the decoded Go graphs as input.
+    const emitted = try a.alloc(Case, golden.value.cases.len);
+    defer a.free(emitted);
+    var initialized: usize = 0;
+    defer for (emitted[0..initialized]) |case| a.free(case.devalue);
+    for (golden.value.cases, 0..) |case, i| {
+        var g = d.Graph.init(a);
+        defer g.deinit();
+        const value = try fixtureValue(&g, case.name);
+        const reducers: []const d.Reducer = if (std.mem.eql(u8, case.name, "reduced_view")) &.{.{ .name = "View", .reduce = reduceView }} else if (std.mem.eql(u8, case.name, "reduced_buffer")) &.{.{ .name = "Raw", .reduce = reduceBuffer }} else &.{};
+        emitted[i] = .{ .name = case.name, .devalue = try d.stringify(a, &g, value, reducers) };
+        initialized += 1;
+        try std.testing.expectEqualStrings(case.devalue, emitted[i].devalue);
+    }
+    const output = try std.json.Stringify.valueAlloc(a, Corpus{ .devalue = d.upstream_version, .cases = emitted }, .{});
+    defer a.free(output);
+    const path = try a.print("{s}/zig.json", .{dir});
+    defer a.free(path);
+    try std.Io.Dir.cwd().writeFile(std.testing.io, .{ .sub_path = path, .data = output });
 }
 
 test "binary constructor geometry, copy lifetime and handle growth" {

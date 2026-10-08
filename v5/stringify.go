@@ -139,6 +139,16 @@ func (s *stringifier) serialize(v any) (string, error) {
 		return `["RegExp",` + quoteString(t.Source) + `,"` + t.Flags + `"]`, nil
 	case ArrayBuffer:
 		return `["ArrayBuffer","` + base64.StdEncoding.EncodeToString(t) + `"]`, nil
+	case *TypedArray:
+		if t == nil || !validView(t.Buffer, t.ByteOffset, t.ByteLength, t.Kind.BytesPerElement()) {
+			return "", errors.New("devalue: invalid typed array")
+		}
+		return s.view(string(t.Kind), t.Buffer, t.ByteOffset, t.ByteLength, t.Len())
+	case *DataView:
+		if t == nil || !validView(t.Buffer, t.ByteOffset, t.ByteLength, 1) {
+			return "", errors.New("devalue: invalid DataView")
+		}
+		return s.view("DataView", t.Buffer, t.ByteOffset, t.ByteLength, t.ByteLength)
 	case *Boxed:
 		i, err := s.flatten(t.Value)
 		if err != nil {
@@ -202,6 +212,18 @@ func (s *stringifier) serialize(v any) (string, error) {
 	}
 
 	return "", fmt.Errorf("Cannot stringify arbitrary non-POJOs (%T)", v) //nolint:staticcheck // ST1005: the message is devalue's own, reproduced verbatim.
+}
+
+func (s *stringifier) view(tag string, buffer ArrayBuffer, offset, byteLength, count int) (string, error) {
+	index, err := s.flatten(buffer)
+	if err != nil {
+		return "", err
+	}
+	out := `[` + quoteString(tag) + `,` + strconv.Itoa(index)
+	if byteLength != len(buffer) {
+		out += "," + strconv.Itoa(offset) + "," + strconv.Itoa(count)
+	}
+	return out + "]", nil
 }
 
 func (s *stringifier) array(items []any) (string, error) {

@@ -1,0 +1,32 @@
+=== RUN   TestFixtureDependenciesIncludeTheRuntime
+=== PAUSE TestFixtureDependenciesIncludeTheRuntime
+=== RUN   TestGeneratedCodecsCompileAndRun
+=== PAUSE TestGeneratedCodecsCompileAndRun
+=== RUN   TestSanitizedNameCollisionInOnePackage
+=== PAUSE TestSanitizedNameCollisionInOnePackage
+=== RUN   TestGenerateRefusals
+=== PAUSE TestGenerateRefusals
+=== CONT  TestFixtureDependenciesIncludeTheRuntime
+=== CONT  TestSanitizedNameCollisionInOnePackage
+=== CONT  TestGenerateRefusals
+=== CONT  TestGeneratedCodecsCompileAndRun
+=== RUN   TestGenerateRefusals/package_name_is_required
+=== RUN   TestGenerateRefusals/nil_root
+=== RUN   TestGenerateRefusals/grammar_admission_applies_to_roots
+=== RUN   TestGenerateRefusals/anonymous_struct_under_a_slice
+=== RUN   TestGenerateRefusals/anonymous_struct_root
+--- PASS: TestGenerateRefusals (0.00s)
+    --- PASS: TestGenerateRefusals/package_name_is_required (0.00s)
+    --- PASS: TestGenerateRefusals/nil_root (0.00s)
+    --- PASS: TestGenerateRefusals/grammar_admission_applies_to_roots (0.00s)
+    --- PASS: TestGenerateRefusals/anonymous_struct_under_a_slice (0.00s)
+    --- PASS: TestGenerateRefusals/anonymous_struct_root (0.00s)
+=== NAME  TestFixtureDependenciesIncludeTheRuntime
+    cache_inputs_test.go:17: 
+        	Error Trace:	/Users/tyler/.codex/worktrees/zig-development-setup/devalue/ephemeral/consumer-scratch.fkPwGe/polytype/devalue/codegen/cache_inputs_test.go:17
+        	Error:      	[]string{"github.com/tylergannon/polytype"} does not contain "github.com/tylergannon/devalue/v5"
+        	Test:       	TestFixtureDependenciesIncludeTheRuntime
+--- FAIL: TestFixtureDependenciesIncludeTheRuntime (0.00s)
+--- PASS: TestSanitizedNameCollisionInOnePackage (0.01s)
+--- PASS: TestGeneratedCodecsCompileAndRun (0.78s)
+FAIL

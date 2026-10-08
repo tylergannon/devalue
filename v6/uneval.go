@@ -246,12 +246,15 @@ func (u *unevaler) walk(v any) error {
 		return nil
 
 	case *TypedArray:
-		if t.Kind.BytesPerElement() == 0 {
+		if !validView(t.Buffer, t.ByteOffset, t.ByteLength, t.Kind.BytesPerElement()) {
 			return u.errorf("Cannot stringify arbitrary non-POJOs")
 		}
 		return u.walk(t.Buffer)
 
 	case *DataView:
+		if !validView(t.Buffer, t.ByteOffset, t.ByteLength, 1) {
+			return u.errorf("Cannot stringify arbitrary non-POJOs")
+		}
 		return u.walk(t.Buffer)
 
 	case []any:

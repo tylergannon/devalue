@@ -67,4 +67,9 @@ fixtures and all twelve typed kinds plus DataView. Recording requires Node with
 Float16Array (use Node 26+), failing rather than silently omitting that kind.
 The browser-path example is recorded in a fresh Node process without Node
 globals. All expected wire bytes still come from the exact pinned devalue.
-Go flat codecs currently reject view tags; these fixtures are consumed by Zig.
+Each module also records its own `testdata/binary-golden.json`,
+`binary-uneval-golden.json`, and byte input from its own pin. Native tests
+require both binary fixture versions to match UpstreamVersion. Go and Zig
+construct inputs independently and exchange the binary corpus in CI.
+Binary expression expectations cover Float16, owned empty-buffer identity,
+and the pinned 5.9.4 odd-buffer quirk.

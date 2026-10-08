@@ -180,6 +180,11 @@ func TestParseInvalid(t *testing.T) {
 		message  string
 	}{
 		{name: "ArrayBuffer with non-string value", json: `[["ArrayBuffer",{"length":100}]]`, message: "Invalid ArrayBuffer encoding"},
+		// Source: https://github.com/sveltejs/devalue/blob/v5.9.4/test/index.test.js
+		// "invalid", "TypedArray self-reference", "mutual TypedArray reference".
+		{name: "typed array with non-ArrayBuffer input", json: `[["Int8Array",1],{"length":2},1000000000]`, message: "Invalid data"},
+		{name: "TypedArray self-reference", json: `[["Uint8Array",0]]`, message: "Invalid data"},
+		{name: "mutual TypedArray reference", json: `[["Uint8Array",1],["Uint8Array",0]]`, message: "Invalid data"},
 		{name: "hole", json: "-2", message: "Invalid input"},
 		{name: "string", json: `"hello"`, message: "Invalid input"},
 		{name: "number", json: "42", message: "Invalid input"},
@@ -200,7 +205,7 @@ func TestParseInvalid(t *testing.T) {
 		{name: "prototype pollution via Object wrapper", json: `[["Object",{"__proto__":1}],{}]`, message: "Invalid input"},
 		{name: "bad index", json: `[{"0":1,"toString":"push"},"hello"]`, message: "Invalid input"},
 		{name: "custom reviver self-reference", json: `[["Custom",0]]`, revivers: map[string]func(any) (any, error){"Custom": func(v any) (any, error) { return v, nil }}, message: "Invalid circular reference"},
-		{name: "unknown type", json: `[["Uint8Array",1],["ArrayBuffer","AQID"]]`, message: "Unknown type Uint8Array"},
+		{name: "unknown type", json: `[["UnknownView",1],["ArrayBuffer","AQID"]]`, message: "Unknown type UnknownView"},
 		{name: "oversized sparse array", json: `[[-7,4000000,0,1],"x"]`, message: "exceeds the limit"},
 	}
 

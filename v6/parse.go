@@ -15,6 +15,8 @@ import (
 var (
 	//nolint:staticcheck // ST1005: the message is devalue's own, reproduced verbatim.
 	errInvalidInput = errors.New("Invalid input")
+	//nolint:staticcheck // ST1005: the raw-view guard's message in devalue 5.9.4.
+	errInvalidData = errors.New("Invalid data")
 	//nolint:staticcheck // ST1005: the message is devalue's own, reproduced verbatim.
 	errProto = errors.New("Cannot parse an object with a `__proto__` property")
 )
@@ -25,7 +27,7 @@ var (
 //
 // Values come back as: nil for null, Undefined for undefined, bool, float64,
 // string, []any (with Hole in empty slots), *Object, *Map, *Set, Date, BigInt,
-// RegExp, ArrayBuffer and *Boxed.
+// RegExp, ArrayBuffer, *TypedArray, *DataView and *Boxed.
 func Parse(s string, revivers map[string]func(any) (any, error)) (any, error) {
 	var top json.RawMessage
 	if err := json.Unmarshal([]byte(s), &top); err != nil {
@@ -220,6 +222,9 @@ func (p *parser) hydrateTagged(index int, tag string, elems []json.RawMessage) (
 	if fn, ok := p.revivers[tag]; ok {
 		return p.revive(index, fn, elems)
 	}
+	if tag == "DataView" || TypedArrayKind(tag).BytesPerElement() != 0 {
+		return p.hydrateView(index, tag, elems)
+	}
 
 	switch tag {
 	case "Date":
@@ -301,6 +306,9 @@ func (p *parser) hydrateTagged(index int, tag string, elems []json.RawMessage) (
 			return nil, errors.New("Invalid ArrayBuffer encoding")
 		}
 		buf := ArrayBuffer(data)
+		if len(buf) == 0 {
+			buf = NewArrayBuffer(nil)
+		}
 		p.store(index, buf)
 		return buf, nil
 

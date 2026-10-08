@@ -54,7 +54,7 @@ The native source strings remain useful readable regression assertions.
 
 ## Binary flat behaviors completed
 
-`zig/tests/binary.zig` independently constructs 109 manually authored recorded
+`zig/tests/binary.zig` independently constructs 111 manually authored recorded
 inputs from `binary-values.mjs`, checks pinned JS encoder bytes and decoded
 node kind, metadata, visible and full bytes, and a handle bijection. Every typed
 kind, including Float16Array, and DataView has whole/sub/empty-end/empty-buffer,
@@ -89,12 +89,14 @@ payload and negative-zero bytes and 64-bit integer bytes are preserved.
   `fromArrayBuffer` operations are not exposed. Relevant revived non-buffer
   rejection is tested through the existing native reviver API.
 
-Both Go modules' views remain expression-only. Binary flat parity is with JS;
-Go checks cover standalone backing buffers and the pre-existing shared corpus,
-plus explicitly demonstrate that both Go flat codecs reject 108 view-tag
-  documents. The custom View document is separately rejected without a reviver.
-The strict numeric-bound/arity policy is documented in README; JS-coerced
-strings/null/fractions and ignored extra fields are acceptance differences.
+Both Go modules now carry the binary flat surface. Each module records its
+111-case corpus from its own pin and independently constructs native inputs;
+Go and Zig exchange all 111 cases in both directions under `just test-interop`
+and CI. Decoded bytes, metadata and view/backing-buffer identities are checked.
+Nine targeted pinned-JS expressions cover Float16, empty sharing and the
+upstream 5.9.4 odd-buffer expression quirk. Native Go tests port the revived
+backing-buffer matrix and guard/order/cycle/bounds behavior. Go preserves
+constructor coercions; Zig's strict bounds/arity remain explicit differences.
 
 ## Outstanding behavior and API differences
 

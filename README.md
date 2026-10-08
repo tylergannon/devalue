@@ -13,7 +13,7 @@ devalue release:
 | Import path | Matches | Status |
 |-------------|---------|--------|
 | `github.com/tylergannon/devalue/v5` | devalue **5.9.4** | Current |
-| `github.com/tylergannon/devalue/v6` | devalue 6.x | In progress, not yet released |
+| `github.com/tylergannon/devalue/v6` | currently **5.9.4**; moving to 6.x | In progress, not yet released |
 
 Use the major that matches the devalue your SvelteKit version resolves. For
 example, SvelteKit 2.x and the 3.0 prereleases depend on devalue 5, so use
@@ -42,17 +42,63 @@ js, err := devalue.Uneval(devalue.NewObject("name", "Ada"))
   `Keys`; a `map[string]any` is accepted on encode with sorted keys), `[]any`,
   `string`, the Go numeric kinds (float64 after parse), `bool`, `nil`,
   `devalue.Undefined`, `devalue.Hole`, and the tagged forms `Date`, `*Map`,
-  `*Set`, `BigInt`, `RegExp`, `ArrayBuffer` and `*Boxed`.
+  `*Set`, `BigInt`, `RegExp`, `ArrayBuffer`, `*TypedArray`, `*DataView` and `*Boxed`.
 - **Custom types:** `StringifyWith(v, reducers)` and the `revivers` argument
   to `Parse` are the flat format's custom-type hooks, tried before the
   built-ins.
 - **Expressions:** `Uneval` preserves shared references and cycles, and also
-  supports typed arrays, `DataView`, `URL`, `URLSearchParams` and `Temporal`,
-  which the flat format does not carry. `UnevalWith(v, replacer)` takes a
+  supports `URL`, `URLSearchParams` and `Temporal`, which this Go flat codec
+  does not yet carry. `UnevalWith(v, replacer)` takes a
   custom hook whose result is trusted JavaScript, inserted verbatim.
 - **What Go cannot express:** distinct identity for equal `Date`, `RegExp`,
   `URL`, `URLSearchParams` or `Temporal` values; shared identity for
-  zero-length slices; strings holding an unpaired UTF-16 surrogate.
+  zero-length arrays or zero-capacity empty buffers; strings holding an unpaired
+  UTF-16 surrogate. `NewArrayBuffer` preserves owned empty-buffer identity.
+
+## Binary views and Go–Zig exchange
+
+Both Go modules and Zig carry all twelve typed-array kinds (including
+Float16Array) and DataView in the devalue **5.9.4 flat format**. Views preserve
+their complete backing bytes, offset, length, repeated identity and shared
+backing-buffer identity. TypedArray.ByteLength is measured in bytes; its Len()
+and the wire count are measured in elements. DataView lengths are in bytes.
+
+```go
+buffer := devalue.NewArrayBuffer([]byte{0, 1, 2, 3, 4, 5})
+view := devalue.NewTypedArray(devalue.Uint16Array, buffer).Subarray(1, 3)
+data := devalue.NewDataViewRange(buffer, 1, 3)
+wire, err := devalue.Stringify(devalue.NewObject("buffer", buffer, "view", view, "again", view, "data", data))
+// Zig parses this using d.parse; Go parses Zig's corresponding documents.
+```
+
+`NewArrayBuffer` copies its input into distinct owned storage, including for
+empty buffers. Reuse the returned slice to share storage; separate calls keep
+distinct identity. The element constructors such as Uint8ArrayOf also own
+distinct storage. Existing ArrayBuffer literals work, but nil/zero-capacity
+empty slices cannot express ownership. Parse returns owned buffers and pointer
+views; mutating a decoded backing byte is visible through every shared view.
+Float16 storage travels as raw bytes and does not require a Go float16 type.
+
+Ordinary subviews serialize **all backing bytes**, including bytes outside the
+visible extent. For an isolated visible-byte copy use
+`NewTypedArray(view.Kind, NewArrayBuffer(view.Buffer[view.ByteOffset:view.ByteOffset+view.ByteLength]))`.
+Both serializers reject geometry JavaScript cannot construct. Uneval preserves
+5.9.4's upstream quirk for valid typed views over odd-sized buffers; the flat
+format handles their explicit extent correctly.
+
+`just test-interop` exchanges 111 independently constructed binary cases in
+both directions and checks decoded contents and reference topology. It runs
+under `just test` and in CI; native Go and Zig suites need no Node. Each module's
+recorder pins its own binary fixtures and expression expectations.
+
+This shared surface does not erase native model limits: Go rejects sparse
+array lengths above 2,097,152, cannot retain shared empty-array identity or
+distinct identity of equal Date/RegExp values, and Zig has stricter admission
+rules for manually crafted documents (see its profile). Use canonical upstream
+metadata and supported values. URL/Temporal and expressions remain outside the
+Zig profile. polytype/skgo still use polytype's older bundled runtime until the
+separate [consumer migration](ephemeral/polytype-migration.md) lands; these
+changes apply to `github.com/tylergannon/devalue/v5` and `/v6`.
 
 Typed codecs for your own Go types can be generated with
 [polytype](https://github.com/tylergannon/polytype)'s `devalue/codegen`.

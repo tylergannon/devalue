@@ -12,5 +12,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v3
       - uses: extractions/setup-just@v3
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: v5/go.mod
+          cache-dependency-path: |
+            v5/go.sum
+            v6/go.sum
       - run: just test-zig
+      - run: just test-interop
       - run: just lint-zig

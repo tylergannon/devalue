@@ -522,8 +522,6 @@ func TestNewUnevalValuesRemainUnsupportedByFlatStringify(t *testing.T) {
 		{"URL", URL("https://example.com/")},
 		{"URLSearchParams", URLSearchParams("a=1")},
 		{"Temporal", Temporal{Kind: TemporalInstant, Value: "1999-09-29T05:30:00Z"}},
-		{"TypedArray", Uint8ArrayOf(1, 2, 3)},
-		{"DataView", NewDataView(ArrayBuffer{1, 2, 3})},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -40,15 +40,15 @@ type Temporal struct {
 // TypedArrayKind names a JavaScript typed array constructor.
 type TypedArrayKind string
 
-// The typed array kinds devalue serializes. Float16Array is deliberately
-// absent: Go has no half-precision float and devalue's own test suite never
-// exercises it.
+// The twelve typed array kinds devalue serializes. Float16Array stores raw
+// half-precision bytes; Go callers need no native float16 type for transport.
 const (
 	Int8Array         TypedArrayKind = "Int8Array"
 	Uint8Array        TypedArrayKind = "Uint8Array"
 	Uint8ClampedArray TypedArrayKind = "Uint8ClampedArray"
 	Int16Array        TypedArrayKind = "Int16Array"
 	Uint16Array       TypedArrayKind = "Uint16Array"
+	Float16Array      TypedArrayKind = "Float16Array"
 	Int32Array        TypedArrayKind = "Int32Array"
 	Uint32Array       TypedArrayKind = "Uint32Array"
 	Float32Array      TypedArrayKind = "Float32Array"
@@ -62,7 +62,7 @@ func (k TypedArrayKind) BytesPerElement() int {
 	switch k {
 	case Int8Array, Uint8Array, Uint8ClampedArray:
 		return 1
-	case Int16Array, Uint16Array:
+	case Int16Array, Uint16Array, Float16Array:
 		return 2
 	case Int32Array, Uint32Array, Float32Array:
 		return 4
@@ -76,7 +76,8 @@ func (k TypedArrayKind) BytesPerElement() int {
 // [ArrayBuffer].
 //
 // Buffer is always the *whole* underlying buffer, because that is what devalue
-// serializes — the view's own extent is emitted as a trailing `.subarray(a,b)`.
+// serializes. The flat format records the offset and element count; Uneval
+// selects the extent with a trailing `.subarray(a,b)`.
 // Two views over the same Buffer value share a buffer in the emitted output,
 // which is the property `new Uint16Array(uint8.buffer)` has in JavaScript.
 //
@@ -98,11 +99,11 @@ func NewTypedArray(kind TypedArrayKind, buf ArrayBuffer) *TypedArray {
 // `TypedArray#subarray` does. It shares t's buffer.
 //
 // Serializing the result discloses the whole buffer, not just the range:
-// [Uneval] writes every byte of Buffer and selects the range with a trailing
-// `.subarray(start,end)`. Serialize a subarray only if its entire buffer is
+// [Stringify] and [Uneval] serialize all of Buffer, including bytes outside
+// the view. Serialize a subarray only if its entire buffer is
 // safe to disclose, or copy the range into a buffer of its own first:
 //
-//	own := NewTypedArray(sub.Kind, append(ArrayBuffer(nil), sub.Buffer[sub.ByteOffset:sub.ByteOffset+sub.ByteLength]...))
+//	own := NewTypedArray(sub.Kind, NewArrayBuffer(sub.Buffer[sub.ByteOffset:sub.ByteOffset+sub.ByteLength]))
 func (t *TypedArray) Subarray(start, end int) *TypedArray {
 	n := t.Kind.BytesPerElement()
 	return &TypedArray{
@@ -146,7 +147,7 @@ func NewDataViewRange(buf ArrayBuffer, byteOffset, byteLength int) *DataView {
 // byte order of every platform a browser runs on.
 
 func Int8ArrayOf(v ...int8) *TypedArray {
-	b := make([]byte, len(v))
+	b := newArrayBuffer(len(v))
 	for i, x := range v {
 		b[i] = byte(x)
 	}
@@ -154,15 +155,15 @@ func Int8ArrayOf(v ...int8) *TypedArray {
 }
 
 func Uint8ArrayOf(v ...uint8) *TypedArray {
-	return NewTypedArray(Uint8Array, append(ArrayBuffer(nil), v...))
+	return NewTypedArray(Uint8Array, NewArrayBuffer(v))
 }
 
 func Uint8ClampedArrayOf(v ...uint8) *TypedArray {
-	return NewTypedArray(Uint8ClampedArray, append(ArrayBuffer(nil), v...))
+	return NewTypedArray(Uint8ClampedArray, NewArrayBuffer(v))
 }
 
 func Int16ArrayOf(v ...int16) *TypedArray {
-	b := make([]byte, 2*len(v))
+	b := newArrayBuffer(2 * len(v))
 	for i, x := range v {
 		binary.LittleEndian.PutUint16(b[2*i:], uint16(x))
 	}
@@ -170,7 +171,7 @@ func Int16ArrayOf(v ...int16) *TypedArray {
 }
 
 func Uint16ArrayOf(v ...uint16) *TypedArray {
-	b := make([]byte, 2*len(v))
+	b := newArrayBuffer(2 * len(v))
 	for i, x := range v {
 		binary.LittleEndian.PutUint16(b[2*i:], x)
 	}
@@ -178,7 +179,7 @@ func Uint16ArrayOf(v ...uint16) *TypedArray {
 }
 
 func Int32ArrayOf(v ...int32) *TypedArray {
-	b := make([]byte, 4*len(v))
+	b := newArrayBuffer(4 * len(v))
 	for i, x := range v {
 		binary.LittleEndian.PutUint32(b[4*i:], uint32(x))
 	}
@@ -186,7 +187,7 @@ func Int32ArrayOf(v ...int32) *TypedArray {
 }
 
 func Uint32ArrayOf(v ...uint32) *TypedArray {
-	b := make([]byte, 4*len(v))
+	b := newArrayBuffer(4 * len(v))
 	for i, x := range v {
 		binary.LittleEndian.PutUint32(b[4*i:], x)
 	}
@@ -194,7 +195,7 @@ func Uint32ArrayOf(v ...uint32) *TypedArray {
 }
 
 func Float32ArrayOf(v ...float32) *TypedArray {
-	b := make([]byte, 4*len(v))
+	b := newArrayBuffer(4 * len(v))
 	for i, x := range v {
 		binary.LittleEndian.PutUint32(b[4*i:], math.Float32bits(x))
 	}
@@ -202,7 +203,7 @@ func Float32ArrayOf(v ...float32) *TypedArray {
 }
 
 func Float64ArrayOf(v ...float64) *TypedArray {
-	b := make([]byte, 8*len(v))
+	b := newArrayBuffer(8 * len(v))
 	for i, x := range v {
 		binary.LittleEndian.PutUint64(b[8*i:], math.Float64bits(x))
 	}
@@ -210,7 +211,7 @@ func Float64ArrayOf(v ...float64) *TypedArray {
 }
 
 func BigInt64ArrayOf(v ...int64) *TypedArray {
-	b := make([]byte, 8*len(v))
+	b := newArrayBuffer(8 * len(v))
 	for i, x := range v {
 		binary.LittleEndian.PutUint64(b[8*i:], uint64(x))
 	}
@@ -218,7 +219,7 @@ func BigInt64ArrayOf(v ...int64) *TypedArray {
 }
 
 func BigUint64ArrayOf(v ...uint64) *TypedArray {
-	b := make([]byte, 8*len(v))
+	b := newArrayBuffer(8 * len(v))
 	for i, x := range v {
 		binary.LittleEndian.PutUint64(b[8*i:], x)
 	}
@@ -252,11 +253,9 @@ type referenceDateKey int64
 // refKey returns a comparable key standing in for v's JavaScript object
 // identity, and whether v participates in reference sharing at all.
 //
-// An empty array, buffer or map gets dedupe=false: Go cannot distinguish two
-// empty slices (they may share the zero-size allocation), and collapsing
-// `{a:[],b:[]}` into one shared array would be a real aliasing bug in the
-// hydrated client. Such a value has no children and cannot take part in a
-// cycle, so nothing is lost by not tracking it.
+// Empty arrays/maps and zero-capacity empty buffers get dedupe=false: their
+// identity is not distinguishable. Owned empty buffers from NewArrayBuffer
+// have positive capacity and participate in sharing.
 func refKey(v any) (any, bool) {
 	rv := reflect.ValueOf(v)
 	if rv.IsValid() {
@@ -297,7 +296,7 @@ func refKey(v any) (any, bool) {
 		}
 		return ptrKey{"array", reflect.ValueOf(t).Pointer(), len(t)}, true
 	case ArrayBuffer:
-		if len(t) == 0 {
+		if len(t) == 0 && cap(t) == 0 {
 			return nil, false
 		}
 		return ptrKey{"buffer", reflect.ValueOf(t).Pointer(), len(t)}, true
