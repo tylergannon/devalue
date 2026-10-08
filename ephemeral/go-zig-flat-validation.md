@@ -1,6 +1,8 @@
 # Go–Zig binary interoperability validation
 
-Target: upstream devalue 5.9.4, both Go modules, Zig 0.17.0. Plan consensus:
+Target: upstream devalue 5.9.4, both Go modules, Zig 0.17.0. The branch
+includes main's installable root package (20a8d45), and the integration recipe
+runs through that root entry point; the nested Zig checkout remains supported. Plan consensus:
 Claude Opus session `598b847f-2392-4c96-b083-d9fb1fa90186`, round 04 reports
 **no findings**. This change closes the binary-view mismatch in the codec
 modules; it does not move v6 to upstream 6.x or claim full JavaScript parity.
@@ -37,7 +39,7 @@ modules; it does not move v6 to upstream 6.x or claim full JavaScript parity.
   upstream 6.x constructor spelling is deliberately left to the parity bump.
 - Go preserves JSON constructor coercions and ignores extra fields like the
   upstream default operations; Zig's stricter bounds/arity remain documented.
-  An independent pinned-JS probe checked the portable coercion expectations.
+  An independent pinned-JS probe checked 221 portable coercion expectations.
 
 ## Checks
 

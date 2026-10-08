@@ -15,3 +15,5 @@ friction: A redirected polytype codegen test compiled and ran generated codecs a
 decision: Binary exchange is now a normal root test and CI check, with both Go modules producing native inputs for Zig and both decoding independently generated Zig output. Missing/empty peer files and wrong count/name/version fail.
 decision: Each maintained module regenerates and pin-checks its own binary and expression corpus; v6 recording does not overwrite Zig's v5 fixtures. The runtime remains additive and both modules still target 5.9.4.
 decision: Redirected polytype codegen and 42 selected skgo tests passed; full skgo example validation is unavailable because its frontend build is absent. This does not complete the separately requested consumer migration.
+
+friction: Installable root Zig package PR #3 landed during implementation review. Rebased onto 20a8d45, preserving addPackage/source_dir and integrating the interop step with that working directory. Root tests/lint passed; missing integration input fails explicitly. Request a full re-review of the final combined tree rather than rely on the older snapshot.
