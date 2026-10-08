@@ -15,6 +15,10 @@ writes to `build.zig.zon`:
 zig fetch --save=devalue https://github.com/tylergannon/devalue/archive/<commit>.tar.gz
 ```
 
+The immutable archive URL identifies the codec revision. The included
+`v5/package.json` and `zig/src/root.zig` record the devalue 5.9.4 pin, which
+native tests assert. Package version `0.1.0` identifies the experimental Zig API.
+
 The archive includes the native tests, licenses and shared upstream corpus.
 `zig build test` works from its unpacked root without a sibling checkout or Node.
 A checkout can also be used as a path dependency on the root or `zig/` directory.
