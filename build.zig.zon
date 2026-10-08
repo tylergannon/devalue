@@ -1,0 +1,7 @@
+.{
+    .name = .devalue,
+    .version = "0.1.0",
+    .fingerprint = 0x61f986482aa09d40,
+    .minimum_zig_version = "0.17.0",
+    .paths = .{ "build.zig", "build.zig.zon", "zig", "v5/testdata/golden.json", "v5/package.json" },
+}
