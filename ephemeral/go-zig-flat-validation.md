@@ -91,3 +91,18 @@ The expanded redirected consumer run passed four codegen tests, all 413 skgo
 root tests, and both internal parsing package suites. A Go invocation with a
 nonmatching filter and an explicit peer flag now exits 1; the same misuse no
 longer produces a successful integration phase.
+
+Implementation consensus: Claude Opus session
+`f944a3eb-a9a2-48b5-9ac1-a3b62e43c1be`, round 02 reports **only nitpicks remain**.
+It independently reran tests, lint, ReleaseSafe, both exchange guards, the
+expanded consumer script and the published-archive file subset. No material
+findings remain. The final Go fuzz runs also passed after TestMain was added
+(about 107,000 and 135,000 mutated inputs).
+
+Accepted nitpick: a raw null backing slot and a fabricated object slot with
+`"0":"ArrayBuffer"` are rejected with Go's `Invalid data`. The pinned JS
+rejects them with a native TypeError and `Invalid input`, respectively. We
+retain the direct array/tag guard instead of admitting a fabricated object
+into hydration merely to match a diagnostic. These are malformed documents
+that upstream's encoder never emits; successful binary interoperability is
+unaffected. This qualifies the generic native-error mapping described above.

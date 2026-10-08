@@ -20,3 +20,5 @@ friction: Installable root Zig package PR #3 landed during implementation review
 
 correction: Opus caught a premature 6.x parse-error spelling in the new raw backing-slot guard. Preserve 5.9.4's Invalid data for a real slot with the wrong tag, and port its three exact upstream invalid-input rows. Missing/out-of-range/fractional references actually throw native TypeError in 5.9.4 (verified directly); those remain Go Invalid input rather than invent an upstream Invalid data expectation.
 decision: Guard requested Go interop flags in TestMain, so a renamed or unmatched test filter cannot silently pass a phase. Expand redirected skgo proof to its entire root package plus internal/formdata and internal/remotearg after Opus independently verified they pass.
+
+decision: Implementation Opus round 02 reached only nitpicks remain on the complete rebased tree. Accept and document the two malformed raw-slot diagnostic differences (null and fabricated object key 0), preserving the direct ArrayBuffer-array guard; successful upstream-produced documents and all ported upstream expectations agree. No new proof machinery requested or introduced.
