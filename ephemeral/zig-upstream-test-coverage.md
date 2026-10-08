@@ -69,12 +69,14 @@ payload and negative-zero bytes and 64-bit integer bytes are preserved.
   are recorded, collapsing to one native visible-byte-copy constructor input;
   empty copies omit hidden bytes, pooled sources yield independent buffers,
   repeated views and surrounding cycles retain identity, file bytes are copied
-  using a checked-in input, ordinary views preserve shared buffers and offsets.
+  using a checked-in embedded input, ordinary views preserve shared buffers and offsets.
   A browser-path JS fixture is recorded without Node globals. Native tests do
   not emulate host pooling, filesystem Buffer production or globals.
 - `parse-operations.test.js` backing-buffer matrix: each kind accepts genuine
   revived buffers, whole/bounded geometry and empty buffers; rejects revived
-  numeric lengths, sparse arrays and array-like objects. Additional cases
+  numeric lengths, sparse arrays and array-like objects, asserting that the
+  reviver runs once before the rejection. Genuine results also check the returned
+  buffer handle and byte offset. Additional cases
   reject strings/null/undefined/views, validate cached revived buffers, preserve
   cached genuine buffer identity, reject custom cycles and invalid handles,
   and check that raw-slot rejection precedes callbacks. Native buffers cannot
@@ -89,7 +91,8 @@ payload and negative-zero bytes and 64-bit integer bytes are preserved.
 
 Both Go modules' views remain expression-only. Binary flat parity is with JS;
 Go checks cover standalone backing buffers and the pre-existing shared corpus,
-plus explicitly demonstrate that both Go flat codecs reject view tags.
+plus explicitly demonstrate that both Go flat codecs reject 108 view-tag
+  documents. The custom View document is separately rejected without a reviver.
 The strict numeric-bound/arity policy is documented in README; JS-coerced
 strings/null/fractions and ignored extra fields are acceptance differences.
 

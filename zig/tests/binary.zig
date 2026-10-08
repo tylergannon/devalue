@@ -63,8 +63,7 @@ fn fixtureValue(g: *d.Graph, name: []const u8) !d.Value {
         return root;
     }
     if (std.mem.eql(u8, name, "file_contents")) {
-        const input = try std.Io.Dir.cwd().readFileAlloc(std.testing.io, "testdata/binary-file-input.txt", a, .limited(1024 * 1024));
-        defer a.free(input);
+        const input = @embedFile("binary-file-input.txt");
         const root = try g.object(false);
         try g.put(root, "file", try g.uint8ArrayCopy(input));
         return root;
@@ -256,16 +255,24 @@ test "all binary tags validate raw references and bounds before allocation" {
 
 const Revival = struct {
     result: ?d.Value = null,
+    returned: ?d.Value = null,
     length: usize = 16,
     calls: usize = 0,
     fn revive(ctx: ?*anyopaque, g: *d.Graph, _: d.Value) d.Error!d.Value {
         const s: *Revival = @ptrCast(@alignCast(ctx.?));
         s.calls += 1;
         const zeros: [16]u8 = @splat(0);
-        return s.result orelse g.arrayBuffer(zeros[0..s.length]);
+        const result = s.result orelse try g.arrayBuffer(zeros[0..s.length]);
+        s.returned = result;
+        return result;
     }
 };
 fn identity(_: ?*anyopaque, _: *d.Graph, v: d.Value) d.Error!d.Value {
+    return v;
+}
+fn countedIdentity(ctx: ?*anyopaque, _: *d.Graph, v: d.Value) d.Error!d.Value {
+    const calls: *usize = @ptrCast(@alignCast(ctx.?));
+    calls.* += 1;
     return v;
 }
 // Source: v5.9.4/test/parse-operations.test.js "view backing buffers".
@@ -273,10 +280,12 @@ test "every view validates revived genuine, empty, array-like and cached buffers
     for (0..kinds.len + 1) |i| {
         const tag = if (i == kinds.len) "DataView" else @tagName(kinds[i]);
         for ([_][]const u8{ "", ",0,1" }) |bounds| {
-            for ([_][]const u8{ "1024", "[-7,1024]", "{\"length\":3}" }) |payload| {
+            for ([_][]const u8{ "1024", "[-7,1024]", "{\"length\":3},1024" }) |payload| {
+                var calls: usize = 0;
                 const wire = try a.print("[[\"{s}\",1{s}],[\"ArrayBuffer\",2],{s}]", .{ tag, bounds, payload });
                 defer a.free(wire);
-                try std.testing.expectError(error.InvalidDocument, d.parse(a, wire, &.{.{ .name = "ArrayBuffer", .revive = identity }}));
+                try std.testing.expectError(error.InvalidDocument, d.parse(a, wire, &.{.{ .name = "ArrayBuffer", .context = &calls, .revive = countedIdentity }}));
+                try std.testing.expectEqual(@as(usize, 1), calls);
             }
         }
         for ([_][]const u8{ "", ",8,1" }) |bounds| {
@@ -287,6 +296,8 @@ test "every view validates revived genuine, empty, array-like and cached buffers
             defer r.deinit();
             const v = try r.graph.node(r.value);
             const b = if (v == .typed_array) v.typed_array.buffer else v.data_view.buffer;
+            try std.testing.expect(d.equal(b, state.returned.?));
+            try std.testing.expectEqual(if (bounds.len == 0) @as(usize, 0) else 8, if (v == .typed_array) v.typed_array.byte_offset else v.data_view.byte_offset);
             try std.testing.expectEqual(@as(usize, 16), (try r.graph.node(b)).array_buffer.len);
             try std.testing.expectEqual(@as(usize, 1), state.calls);
             const w = if (i == kinds.len) 1 else kinds[i].bytesPerElement();

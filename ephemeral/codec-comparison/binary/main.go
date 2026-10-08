@@ -62,5 +62,5 @@ func main() {
 	if _, err := v6.Stringify(v6.NewDataView(v6.ArrayBuffer{1, 2, 3})); err == nil {
 		panic("v6 flat encode view unexpectedly supported")
 	}
-	fmt.Printf("Go v5/v6: %d standalone JS-recorded buffers agree; all %d binary documents rejected as expected (flat views unsupported)\n", buffers, len(corpus.Cases))
+	fmt.Printf("Go v5/v6: %d standalone JS-recorded buffers agree; %d flat-view documents rejected (views unsupported); one custom View document rejected without a reviver\n", buffers, len(corpus.Cases)-1)
 }

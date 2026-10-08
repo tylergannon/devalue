@@ -62,7 +62,7 @@ Zig native tests consume the results without running Node.
 
 Binary-view inputs in `binary-values.mjs` write
 `../../../zig/testdata/binary-golden.json` and the byte input
-`../../../zig/testdata/binary-file-input.txt`. They cover upstream index/buffer
+`../../../zig/tests/binary-file-input.txt`. They cover upstream index/buffer
 fixtures and all twelve typed kinds plus DataView. Recording requires Node with
 Float16Array (use Node 26+), failing rather than silently omitting that kind.
 The browser-path example is recorded in a fresh Node process without Node

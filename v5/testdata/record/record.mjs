@@ -47,7 +47,7 @@ const binaryCases = binaryValues.map(([name, value, reducers]) => ({ name, deval
 binaryCases.push({name: "browser_uint8", devalue: browserWire});
 writeFileSync(join(here, "..", "..", "..", "zig", "testdata", "binary-golden.json"),
   JSON.stringify({ devalue: installed, cases: binaryCases }, null, 2) + "\n");
-writeFileSync(join(here, "..", "..", "..", "zig", "testdata", "binary-file-input.txt"), fileInput);
+writeFileSync(join(here, "..", "..", "..", "zig", "tests", "binary-file-input.txt"), fileInput);
 process.stdout.write(`wrote ${binaryCases.length} binary cases from devalue ${installed}\n`);
 
 // installedVersion reads the version of the devalue package that the import

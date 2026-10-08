@@ -21,8 +21,8 @@ its optional clarifications were applied before implementation.
   are recorded from JS. Native ports collapse host construction mechanics to
   the same visible-byte-copy operation; separate copies retain distinct buffers.
 - Per-kind raw-slot/type/arity/alignment/range/overflow checks, omitted bounds,
-  remainder bounds, genuine and empty revived buffers, invalid length/array-like
-  results, cached buffers, invalid handles and custom cycles are exercised.
+  remainder bounds, genuine and empty revived buffers (checking returned identity and offsets), invalid
+  length/array-like results with one reviver invocation asserted, cached buffers, invalid handles and custom cycles are exercised.
   Rejected non-ArrayBuffer wire slots cannot invoke their custom callbacks.
 - Leak-checked input release and graph growth preserve visible bytes and handles.
   Existing deterministic allocation-failure enumeration covers copying, view
@@ -45,9 +45,8 @@ its optional clarifications were applied before implementation.
   independently constructed `{buffer,typed,again:typed,data,copy,self}` using
   bytes 0..7, Float16Array(buffer,2,2), DataView(buffer,1,3), and a visible-byte copy.
 - `cd ephemeral/codec-comparison && go run ./binary`: both Go modules agree on
-  **108 standalone JS-recorded ArrayBuffer documents**. They reject all **109**
-  binary fixture documents, and example native Go typed-view encoding fails as
-  expected. Go flat-view parity is not claimed: views are expression-only there.
+  **108 standalone JS-recorded ArrayBuffer documents**. They reject **108 flat-view documents** and the one custom View document
+  without its reviver; example native Go typed-view encoding fails as expected. Go flat-view parity is not claimed: views are expression-only there.
 - Recorder ran with Node 26.10.0 and pinned devalue 5.9.4; the existing three
   fixture files reproduced unchanged. Binary recording refuses missing Float16Array.
 
