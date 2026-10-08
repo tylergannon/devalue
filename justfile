@@ -20,7 +20,7 @@ record module:
 
 # Zig tests use shared recorded fixtures without Node.
 test-zig:
-    cd zig && mise exec -- zig build test
+    mise exec -- zig build test
 
 lint-zig:
-    cd zig && mise exec -- zig build fmt
+    mise exec -- zig build fmt
