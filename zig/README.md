@@ -7,7 +7,22 @@ the same release; their flat codecs do not yet support binary views. This packag
 does not implement `uneval` expressions or claim
 all JavaScript devalue features.
 
-Import the `devalue` module from a Zig path dependency on this directory:
+The repository root is an installable Zig package. Add a dependency using an
+immutable GitHub commit archive, then retain the URL and package hash that Zig
+writes to `build.zig.zon`:
+
+```sh
+zig fetch --save=devalue https://github.com/tylergannon/devalue/archive/<commit>.tar.gz
+```
+
+The immutable archive URL identifies the codec revision. The included
+`v5/package.json` and `zig/src/root.zig` record the devalue 5.9.4 pin, which
+native tests assert. Package version `0.1.0` identifies the experimental Zig API.
+
+The archive includes the native tests, licenses and shared upstream corpus.
+`zig build test` works from its unpacked root without a sibling checkout or Node.
+A checkout can also be used as a path dependency on the root or `zig/` directory.
+Import its module in the consumer build:
 
 ```zig
 const dependency = b.dependency("devalue", .{ .target = target, .optimize = optimize });
@@ -157,7 +172,8 @@ From repository root: `mise install`, then `just test` and `just lint` include
 Zig alongside Go. `just test-zig` runs native tests without Node. The shared corpus
 stays in `../v5/testdata/golden.json`; `-Dgolden=/absolute/path` overrides lookup.
 The test run always executes, so runtime fixture/pin changes cannot reuse a cached
-success. These tests require the repository checkout. `just record v5` regenerates
+success. The root package includes the shared corpus and upstream package pin, so these
+tests also run from a fetched/unpacked repository archive. `just record v5` regenerates
 the shared corpus, `zig/testdata/flat-golden.json`, and the upstream-native
 `zig/testdata/upstream-flat-golden.json`, and `zig/testdata/binary-golden.json`
 from the single pinned JS package. Binary recording requires Node with

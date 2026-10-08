@@ -67,7 +67,8 @@ the pin are described in `vN/testdata/record/README.md`.
 
 ## Zig package
 
-[`zig/`](zig/README.md) is a separate experimental Zig 0.17.0 package targeting
+The repository root is an installable experimental Zig 0.17.0 package exporting
+the codec in [`zig/`](zig/README.md). It targets
 an explicit devalue 5.9.4 flat-format profile, with allocator ownership, stable
 graph handles and native tests. It shares the upstream fixtures with Go;
 expression generation and the excluded JavaScript types are outside this profile.

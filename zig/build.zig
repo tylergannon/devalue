@@ -1,22 +1,27 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
+    addPackage(b, ".");
+}
+
+// Both the repository archive and the nested checkout export the same module.
+pub fn addPackage(b: *std.Build, source_dir: []const u8) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-    const lib = b.addModule("devalue", .{ .root_source_file = b.path("src/root.zig"), .target = target, .optimize = optimize });
+    const lib = b.addModule("devalue", .{ .root_source_file = b.path(b.pathJoin(&.{ source_dir, "src/root.zig" })), .target = target, .optimize = optimize });
     const fixtures = b.addOptions();
     fixtures.addOption([]const u8, "golden_path", b.option([]const u8, "golden", "Shared upstream fixture path") orelse "../v5/testdata/golden.json");
-    const tests_mod = b.createModule(.{ .root_source_file = b.path("tests/tests.zig"), .target = target, .optimize = optimize });
+    const tests_mod = b.createModule(.{ .root_source_file = b.path(b.pathJoin(&.{ source_dir, "tests/tests.zig" })), .target = target, .optimize = optimize });
     tests_mod.addImport("devalue", lib);
     tests_mod.addOptions("fixtures", fixtures);
     const tests = b.addTest(.{ .root_module = tests_mod });
     const run = b.addRunArtifact(tests);
     // Fixtures and package pins are read at runtime, outside the build cache.
     run.has_side_effects = true;
-    run.setCwd(b.path("."));
+    run.setCwd(b.path(source_dir));
     b.step("test", "Run native codec and parity tests").dependOn(&run.step);
-    b.step("fmt", "Check Zig formatting").dependOn(&b.addFmt(.{ .paths = b.pathList(&.{ "build.zig", "src", "tests", "bench.zig" }), .check = true }).step);
-    const bench_mod = b.createModule(.{ .root_source_file = b.path("bench.zig"), .target = target, .optimize = optimize });
+    b.step("fmt", "Check Zig formatting").dependOn(&b.addFmt(.{ .paths = b.pathList(&.{source_dir}), .check = true }).step);
+    const bench_mod = b.createModule(.{ .root_source_file = b.path(b.pathJoin(&.{ source_dir, "bench.zig" })), .target = target, .optimize = optimize });
     bench_mod.addImport("devalue", lib);
     const bench = b.addExecutable(.{ .name = "devalue-bench", .root_module = bench_mod });
     const bench_run = b.addRunArtifact(bench);
