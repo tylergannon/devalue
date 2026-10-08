@@ -42,6 +42,15 @@ to land with reduced upstream behavioral fidelity. Keep standard hash indexes
 and explicit ordered views unless correctness or consumer use requires a change;
 optimal insertion-order performance and changing to ArrayHashMap are not gates.
 
+Latest delivery authorization (2026-10-07): after the validated basic milestone,
+the user explicitly requested its PR and merge, followed by recommendations for
+next steps. This authorizes landing the experimental basic flat package now.
+The earlier full-fidelity-before-landing requirement is superseded for this
+milestone only; full upstream behavioral fidelity remains the goal for the
+completed port, with the unfinished features and acceptance/API differences
+retained in `zig-upstream-test-coverage.md`. This merge is not a full-parity
+release or publication.
+
 ## Scope and contracts
 
 The initial supported values are null, undefined, booleans, JavaScript f64

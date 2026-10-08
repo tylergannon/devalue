@@ -2,6 +2,13 @@
 
 User request: build the reviewed package, establish scoped equivalence with upstream and Go, and obtain Claude Opus consensus. Do not introduce elaborate proof machinery. The current target is the basic flat-codec correctness milestone; user sequencing returns to missing features afterward, and full upstream behavioral test fidelity remains required before landing. The authoritative scope is `ephemeral/zig-development-plan.md` and the public profile in `zig/README.md`.
 
+Delivery update: the user subsequently explicitly requested PR/merge of this
+validated basic milestone. That authorizes its experimental subset to land now,
+while the full-parity features and reconciliation work remain unfinished
+follow-ups. Earlier before-landing wording below records the prior scope;
+it is not a claim that those follow-ups are already implemented or waived for
+a full-parity release. No tag or package publication is requested.
+
 ## Runtime evidence
 
 Claude Opus round 02 reached **only nitpicks remain** for this basic milestone.
