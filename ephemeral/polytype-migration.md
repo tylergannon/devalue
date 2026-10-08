@@ -42,8 +42,9 @@ Go proxy. polytype cannot require an untagged module (a `replace` would break
   `typescript/library_test.go` import `devalue/codegen`, which keeps its path.
 - Delete the runtime: every file directly in `devalue/` (not
   `devalue/codegen/`), plus `devalue/testdata/`.
-- Remove the devalue pin from the root `package.json` and its lockfile, keeping
-  `typescript`. Drop `github.com/dop251/goja` from `go.mod` (only the runtime's
+- Keep the root JavaScript devalue pin: `TestRecursiveDevalueJSInterop` uses it
+  to verify generated codecs against upstream, independently of the removed
+  recorder. Drop `github.com/dop251/goja` from `go.mod` (only the runtime's
   tests used it; `go mod tidy` confirms).
 - Delete the notes that moved here: `ephemeral/devalue-parity/`,
   `ephemeral/issue-154-uneval-migration-plan.md`,
