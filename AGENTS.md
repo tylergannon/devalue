@@ -20,7 +20,7 @@ its own module, in its own directory:
 
 | Directory | Module path | Tracks | State |
 |-----------|-------------|--------|-------|
-| `v5/` | `github.com/tylergannon/devalue/v5` | devalue 5.x | At parity with **5.9.4**. Not yet tagged; see "Next steps" |
+| `v5/` | `github.com/tylergannon/devalue/v5` | devalue 5.x | At parity with **5.9.4**. Released as **v5.0.0** |
 | `v6/` | `github.com/tylergannon/devalue/v6` | devalue 6.x | A copy of v5 (still 5.9.4). Not tagged until it reaches parity with a devalue 6 release |
 
 Version numbers within a module:
@@ -52,9 +52,10 @@ its SvelteKit resolves. As of 2026-09-25, SvelteKit 2.70.3 depends on
 - **polytype** (`/Users/tyler/src/polytype`, `github.com/tylergannon/polytype`):
   its `devalue/codegen` generates typed `Encode`/`Decode`/`Stringify`/`Parse`
   functions for Go types. The generated code imports this runtime; the
-  import path is `devaluePackagePath` in `devalue/codegen/generate.go`. Until
-  polytype migrates (see `ephemeral/polytype-migration.md`), polytype still
-  ships its own copy of the runtime at `github.com/tylergannon/polytype/devalue`.
+  import path is `devaluePackagePath` in `devalue/codegen/generate.go`.
+  Polytype **v1.5.0** generates imports of `github.com/tylergannon/devalue/v5`
+  at **v5.0.0**; its bundled runtime was removed in PR #163.
+  See `ephemeral/polytype-migration.md`.
 - **skgo** (`/Users/tyler/src/skgo`): a Go SvelteKit server. It uses the flat
   format for remote functions and form data, and `UnevalWith` with a
   `Replacer` for SSR hydration, streamed promises and transport hooks. Its
@@ -130,10 +131,8 @@ it:
 
 ## Next steps
 
-1. Create the GitHub releases: tag `v5.0.0` (`Parity: devalue 5.9.4`), then
-   warm the proxy with `GOPROXY=https://proxy.golang.org go list -m github.com/tylergannon/devalue/v5@v5.0.0`.
-2. Migrate polytype and skgo onto `…/devalue/v5`, following
-   `ephemeral/polytype-migration.md`.
-3. Port v6 to devalue 6.0.2 using the change map. v6 is its own import path,
+1. Migrate skgo onto `…/devalue/v5` and the new polytype release, following
+   Step 2 of `ephemeral/polytype-migration.md`.
+2. Port v6 to devalue 6.0.2 using the change map. v6 is its own import path,
    so it takes upstream's breaking changes directly (the `js`-tagged-template
    replacer, the new hoisting shape) instead of adding them alongside.

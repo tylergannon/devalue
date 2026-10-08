@@ -1,0 +1,35 @@
+{
+	"Path": "github.com/tylergannon/polytype",
+	"Version": "v1.5.0",
+	"Time": "2026-10-08T09:14:54Z",
+	"Dir": "/Users/tyler/go/pkg/mod/github.com/tylergannon/polytype@v1.5.0",
+	"GoMod": "/Users/tyler/go/pkg/mod/cache/download/github.com/tylergannon/polytype/@v/v1.5.0.mod",
+	"GoVersion": "1.27",
+	"GoModSum": "h1:ljszsbERJJBCiZvsLCIaRBl2/f8USUuGJ0+uD1hJbgw=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://github.com/tylergannon/polytype",
+		"Hash": "3e5e40c59e69cf2ed951b06e6585d27fb18c29c7",
+		"Ref": "refs/tags/v1.5.0"
+	}
+}
+{
+	"Path": "github.com/tylergannon/devalue/v5",
+	"Version": "v5.0.0",
+	"Time": "2026-10-08T08:55:43Z",
+	"Dir": "/Users/tyler/go/pkg/mod/github.com/tylergannon/devalue/v5@v5.0.0",
+	"GoMod": "/Users/tyler/go/pkg/mod/cache/download/github.com/tylergannon/devalue/v5/@v/v5.0.0.mod",
+	"GoVersion": "1.27",
+	"Sum": "h1:UZuNeNpVXHnn79lOS/l7gEWcC4jKoILHUb0s3F2+3J8=",
+	"GoModSum": "h1:F3VxJn5uu/ROJxoVB3zhxFwuWl+jUrv6n6EJC5yB3z8=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://github.com/tylergannon/devalue",
+		"Hash": "f4c94b9aabb447e0e94452cd529a19f5d482efcf",
+		"Ref": "refs/tags/v5.0.0"
+	}
+}
+gen/main.go:7:2: missing go.sum entry for module providing package github.com/tylergannon/polytype (imported by example.com/runtime-consumer/gen); to add:
+	go get example.com/runtime-consumer/gen
+gen/main.go:8:2: missing go.sum entry for module providing package github.com/tylergannon/polytype/codegen (imported by example.com/runtime-consumer/gen); to add:
+	go get example.com/runtime-consumer/gen
