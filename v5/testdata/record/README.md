@@ -51,3 +51,11 @@ repository's `AGENTS.md`.
 6. Before releasing, run each downstream consumer's tests (polytype's
    `devalue/codegen`, skgo) against the change through a `go.work` that uses
    both checkouts.
+
+The same `record.mjs` also writes `../../../zig/testdata/flat-golden.json` from
+explicit inputs in `zig-values.mjs`, including reference identities the Go model
+cannot preserve and custom reducer cases. It also writes
+`../../../zig/testdata/upstream-flat-golden.json` from `upstream-values.mjs`,
+which ports upstream's common flat fixtures into independently constructed
+native Zig cases. All three outputs use this one exact pin.
+Zig native tests consume the results without running Node.

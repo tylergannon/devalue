@@ -65,6 +65,14 @@ against it without Node, alongside test expectations ported from upstream's
 own suite and a goja evaluation of emitted expressions. Recording and moving
 the pin are described in `vN/testdata/record/README.md`.
 
+## Zig package
+
+[`zig/`](zig/README.md) is a separate experimental Zig 0.17.0 package targeting
+an explicit devalue 5.9.4 flat-format profile, with allocator ownership, stable
+graph handles and native tests. It shares the upstream fixtures with Go;
+expression generation and the excluded JavaScript types are outside this profile.
+`just test` and `just lint` include both languages.
+
 ## License
 
 This code is released under the BSD Zero Clause License (`LICENSE`). It ports
