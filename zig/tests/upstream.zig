@@ -320,7 +320,7 @@ fn passthrough(_: ?*anyopaque, _: *d.Graph, v: d.Value) d.Error!d.Value {
     return v;
 }
 // index.test.js invalid table (1110-1254) and key guards (1271-1314).
-// Typed view cases return UnsupportedValue until that feature is implemented.
+// View-specific invalid documents are ported in binary.zig.
 test "upstream invalid documents and null-prototype key guards" {
     const invalid = [_][]const u8{
         "[[\"ArrayBuffer\",{\"length\":100}]]",                            "",                                    "][",                                                  "-2",                                          "\"hello\"",                                                        "42",             "true",      "null",       "{}",             "[]",

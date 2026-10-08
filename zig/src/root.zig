@@ -17,6 +17,31 @@ pub const Entry = struct { key: Value, value: Value };
 pub const Object = struct { null_proto: bool, properties: std.ArrayList(Property) = .empty, lookup: std.StringHashMapUnmanaged(usize) = .empty, next_order: usize = 0, ordered: bool = true };
 pub const Array = struct { length: u32, elements: std.ArrayList(Element) = .empty, lookup: std.AutoHashMapUnmanaged(u32, usize) = .empty, ordered: bool = true };
 pub const RegExp = struct { source: []const u8, flags: []const u8 };
+pub const TypedArrayKind = enum {
+    Int8Array,
+    Uint8Array,
+    Uint8ClampedArray,
+    Int16Array,
+    Uint16Array,
+    Float16Array,
+    Int32Array,
+    Uint32Array,
+    Float32Array,
+    Float64Array,
+    BigInt64Array,
+    BigUint64Array,
+
+    pub fn bytesPerElement(self: TypedArrayKind) usize {
+        return switch (self) {
+            .Int8Array, .Uint8Array, .Uint8ClampedArray => 1,
+            .Int16Array, .Uint16Array, .Float16Array => 2,
+            .Int32Array, .Uint32Array, .Float32Array => 4,
+            .Float64Array, .BigInt64Array, .BigUint64Array => 8,
+        };
+    }
+};
+pub const TypedArray = struct { kind: TypedArrayKind, buffer: Value, byte_offset: usize, length: usize };
+pub const DataView = struct { buffer: Value, byte_offset: usize, byte_length: usize };
 pub const Map = struct { entries: std.ArrayList(Entry) = .empty, lookup: std.HashMapUnmanaged(Value, usize, ValueContext, 80) = .empty };
 pub const Set = struct { values: std.ArrayList(Value) = .empty, lookup: std.HashMapUnmanaged(Value, void, ValueContext, 80) = .empty };
 pub const ByteKey = struct { ptr: usize, len: usize };
@@ -59,6 +84,8 @@ pub const Node = union(enum) {
     date: i64,
     regexp: RegExp,
     array_buffer: []const u8,
+    typed_array: TypedArray,
+    data_view: DataView,
     boxed: Value,
 };
 
@@ -123,6 +150,42 @@ pub const Graph = struct {
     }
     pub fn arrayBuffer(self: *Graph, bytes: []const u8) Error!Value {
         return self.add(.{ .array_buffer = try self.allocator().dupe(u8, bytes) });
+    }
+    /// A subview serializes the entire backing buffer. Use uint8ArrayCopy on
+    /// visible bytes when the rest of the buffer must not be included.
+    /// Length is in elements; the buffer must belong to this graph.
+    pub fn typedArray(self: *Graph, kind: TypedArrayKind, buffer: Value, byte_offset: usize, length: usize) Error!Value {
+        try self.checkView(buffer, byte_offset, length, kind.bytesPerElement());
+        return self.add(.{ .typed_array = .{ .kind = kind, .buffer = buffer, .byte_offset = byte_offset, .length = length } });
+    }
+    /// A subview serializes the entire backing buffer, including hidden bytes.
+    /// Use uint8ArrayCopy for a visible-byte-only copy. Length is in bytes.
+    pub fn dataView(self: *Graph, buffer: Value, byte_offset: usize, byte_length: usize) Error!Value {
+        try self.checkView(buffer, byte_offset, byte_length, 1);
+        return self.add(.{ .data_view = .{ .buffer = buffer, .byte_offset = byte_offset, .byte_length = byte_length } });
+    }
+    fn checkView(self: *const Graph, buffer: Value, offset: usize, length: usize, width: usize) Error!void {
+        const n = try self.rawNode(buffer);
+        if (n != .array_buffer) return error.InvalidType;
+        if (offset > n.array_buffer.len or offset % width != 0 or length > (n.array_buffer.len - offset) / width) return error.InvalidType;
+    }
+    /// Copies only these bytes into a fresh Uint8Array and fresh backing buffer.
+    /// Retain the returned handle to preserve repeated view identity.
+    pub fn uint8ArrayCopy(self: *Graph, bytes: []const u8) Error!Value {
+        const buffer = try self.arrayBuffer(bytes);
+        return self.typedArray(.Uint8Array, buffer, 0, bytes.len);
+    }
+    /// Read-only visible bytes, borrowed from this graph until deinit. No numeric
+    /// interpretation, alignment requirement or host-endian conversion occurs.
+    pub fn viewBytes(self: *const Graph, value: Value) Error![]const u8 {
+        const n = try self.rawNode(value);
+        const buffer, const offset, const length, const width = switch (n) {
+            .typed_array => |v| .{ v.buffer, v.byte_offset, v.length, v.kind.bytesPerElement() },
+            .data_view => |v| .{ v.buffer, v.byte_offset, v.byte_length, @as(usize, 1) },
+            else => return error.InvalidType,
+        };
+        try self.checkView(buffer, offset, length, width);
+        return (try self.rawNode(buffer)).array_buffer[offset..][0 .. length * width];
     }
     pub fn boxed(self: *Graph, value: Value) Error!Value {
         switch (value) {

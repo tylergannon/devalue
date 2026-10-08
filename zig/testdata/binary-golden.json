@@ -1,0 +1,441 @@
+{
+  "devalue": "5.9.4",
+  "cases": [
+    {
+      "name": "Int8Array_full",
+      "devalue": "[[\"Int8Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int8Array_sub",
+      "devalue": "[[\"Int8Array\",1,1,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int8Array_empty_end",
+      "devalue": "[[\"Int8Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int8Array_empty_buffer",
+      "devalue": "[[\"Int8Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Int8Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Int8Array\",2,1,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Int8Array\",2,1,2]]"
+    },
+    {
+      "name": "Int8Array_odd_explicit",
+      "devalue": "[[\"Int8Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Uint8Array_full",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint8Array_sub",
+      "devalue": "[[\"Uint8Array\",1,1,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint8Array_empty_end",
+      "devalue": "[[\"Uint8Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint8Array_empty_buffer",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Uint8Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Uint8Array\",2,1,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Uint8Array\",2,1,2]]"
+    },
+    {
+      "name": "Uint8Array_odd_explicit",
+      "devalue": "[[\"Uint8Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Uint8ClampedArray_full",
+      "devalue": "[[\"Uint8ClampedArray\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint8ClampedArray_sub",
+      "devalue": "[[\"Uint8ClampedArray\",1,1,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint8ClampedArray_empty_end",
+      "devalue": "[[\"Uint8ClampedArray\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint8ClampedArray_empty_buffer",
+      "devalue": "[[\"Uint8ClampedArray\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Uint8ClampedArray_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Uint8ClampedArray\",2,1,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Uint8ClampedArray\",2,1,2]]"
+    },
+    {
+      "name": "Uint8ClampedArray_odd_explicit",
+      "devalue": "[[\"Uint8ClampedArray\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Int16Array_full",
+      "devalue": "[[\"Int16Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int16Array_sub",
+      "devalue": "[[\"Int16Array\",1,2,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int16Array_empty_end",
+      "devalue": "[[\"Int16Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int16Array_empty_buffer",
+      "devalue": "[[\"Int16Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Int16Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Int16Array\",2,2,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Int16Array\",2,2,2]]"
+    },
+    {
+      "name": "Int16Array_odd_explicit",
+      "devalue": "[[\"Int16Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Uint16Array_full",
+      "devalue": "[[\"Uint16Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint16Array_sub",
+      "devalue": "[[\"Uint16Array\",1,2,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint16Array_empty_end",
+      "devalue": "[[\"Uint16Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint16Array_empty_buffer",
+      "devalue": "[[\"Uint16Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Uint16Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Uint16Array\",2,2,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Uint16Array\",2,2,2]]"
+    },
+    {
+      "name": "Uint16Array_odd_explicit",
+      "devalue": "[[\"Uint16Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Float16Array_full",
+      "devalue": "[[\"Float16Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float16Array_sub",
+      "devalue": "[[\"Float16Array\",1,2,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float16Array_empty_end",
+      "devalue": "[[\"Float16Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float16Array_empty_buffer",
+      "devalue": "[[\"Float16Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Float16Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Float16Array\",2,2,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Float16Array\",2,2,2]]"
+    },
+    {
+      "name": "Float16Array_odd_explicit",
+      "devalue": "[[\"Float16Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Int32Array_full",
+      "devalue": "[[\"Int32Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int32Array_sub",
+      "devalue": "[[\"Int32Array\",1,4,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int32Array_empty_end",
+      "devalue": "[[\"Int32Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Int32Array_empty_buffer",
+      "devalue": "[[\"Int32Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Int32Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Int32Array\",2,4,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Int32Array\",2,4,2]]"
+    },
+    {
+      "name": "Int32Array_odd_explicit",
+      "devalue": "[[\"Int32Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Uint32Array_full",
+      "devalue": "[[\"Uint32Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint32Array_sub",
+      "devalue": "[[\"Uint32Array\",1,4,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint32Array_empty_end",
+      "devalue": "[[\"Uint32Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Uint32Array_empty_buffer",
+      "devalue": "[[\"Uint32Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Uint32Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Uint32Array\",2,4,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Uint32Array\",2,4,2]]"
+    },
+    {
+      "name": "Uint32Array_odd_explicit",
+      "devalue": "[[\"Uint32Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Float32Array_full",
+      "devalue": "[[\"Float32Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float32Array_sub",
+      "devalue": "[[\"Float32Array\",1,4,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float32Array_empty_end",
+      "devalue": "[[\"Float32Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float32Array_empty_buffer",
+      "devalue": "[[\"Float32Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Float32Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Float32Array\",2,4,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Float32Array\",2,4,2]]"
+    },
+    {
+      "name": "Float32Array_odd_explicit",
+      "devalue": "[[\"Float32Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "Float64Array_full",
+      "devalue": "[[\"Float64Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float64Array_sub",
+      "devalue": "[[\"Float64Array\",1,8,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float64Array_empty_end",
+      "devalue": "[[\"Float64Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "Float64Array_empty_buffer",
+      "devalue": "[[\"Float64Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "Float64Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"Float64Array\",2,8,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"Float64Array\",2,8,2]]"
+    },
+    {
+      "name": "Float64Array_odd_explicit",
+      "devalue": "[[\"Float64Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "BigInt64Array_full",
+      "devalue": "[[\"BigInt64Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "BigInt64Array_sub",
+      "devalue": "[[\"BigInt64Array\",1,8,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "BigInt64Array_empty_end",
+      "devalue": "[[\"BigInt64Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "BigInt64Array_empty_buffer",
+      "devalue": "[[\"BigInt64Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "BigInt64Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"BigInt64Array\",2,8,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"BigInt64Array\",2,8,2]]"
+    },
+    {
+      "name": "BigInt64Array_odd_explicit",
+      "devalue": "[[\"BigInt64Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "BigUint64Array_full",
+      "devalue": "[[\"BigUint64Array\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "BigUint64Array_sub",
+      "devalue": "[[\"BigUint64Array\",1,8,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "BigUint64Array_empty_end",
+      "devalue": "[[\"BigUint64Array\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "BigUint64Array_empty_buffer",
+      "devalue": "[[\"BigUint64Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "BigUint64Array_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"BigUint64Array\",2,8,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"BigUint64Array\",2,8,2]]"
+    },
+    {
+      "name": "BigUint64Array_odd_explicit",
+      "devalue": "[[\"BigUint64Array\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "DataView_full",
+      "devalue": "[[\"DataView\",1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "DataView_sub",
+      "devalue": "[[\"DataView\",1,1,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "DataView_empty_end",
+      "devalue": "[[\"DataView\",1,32,0],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"]]"
+    },
+    {
+      "name": "DataView_empty_buffer",
+      "devalue": "[[\"DataView\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "DataView_identity",
+      "devalue": "[{\"view\":1,\"again\":1,\"distinct\":3,\"buffer\":2,\"self\":0},[\"DataView\",2,1,2],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=\"],[\"DataView\",2,1,2]]"
+    },
+    {
+      "name": "DataView_odd_explicit",
+      "devalue": "[[\"DataView\",1,0,1],[\"ArrayBuffer\",\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8g\"]]"
+    },
+    {
+      "name": "uint8",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "node_alloc",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"QUFBQQ==\"]]"
+    },
+    {
+      "name": "float64_negative_zero",
+      "devalue": "[[\"Float64Array\",1],[\"ArrayBuffer\",\"AAAAAAAAAIAAAAAAAAD4Pw==\"]]"
+    },
+    {
+      "name": "bigint64",
+      "devalue": "[[\"BigInt64Array\",1],[\"ArrayBuffer\",\"AQAAAAAAAAD+/////////wMAAAAAAAAA\"]]"
+    },
+    {
+      "name": "biguint64",
+      "devalue": "[[\"BigUint64Array\",1],[\"ArrayBuffer\",\"AQAAAAAAAAACAAAAAAAAAAMAAAAAAAAA\"]]"
+    },
+    {
+      "name": "dataview",
+      "devalue": "[[\"DataView\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "dataview_sub",
+      "devalue": "[[\"DataView\",1,2,4],[\"ArrayBuffer\",\"AAECAwQFBgcICQ==\"]]"
+    },
+    {
+      "name": "uint16_sub",
+      "devalue": "[[\"Uint16Array\",1,2,2],[\"ArrayBuffer\",\"CgAUAB4AKAA=\"]]"
+    },
+    {
+      "name": "buffer_repeat_views",
+      "devalue": "[[1,3],[\"Uint8Array\",2],[\"ArrayBuffer\",\"AAECAwQFBgcICQ==\"],[\"Uint16Array\",2]]"
+    },
+    {
+      "name": "typed_repeat",
+      "devalue": "[[1,1],[\"Uint8Array\",2],[\"ArrayBuffer\",\"AAECAwQFBgcICQ==\"]]"
+    },
+    {
+      "name": "buffer_typed_repeat",
+      "devalue": "[[1,1,3],[\"Uint8Array\",2],[\"ArrayBuffer\",\"AAECAwQFBgcICQ==\"],[\"Uint16Array\",2]]"
+    },
+    {
+      "name": "data_repeat",
+      "devalue": "[[1,1],[\"DataView\",2],[\"ArrayBuffer\",\"AAECAwQFBgcICQ==\"]]"
+    },
+    {
+      "name": "buffer_data_repeat",
+      "devalue": "[[1,1,2],[\"DataView\",2],[\"ArrayBuffer\",\"AAECAwQFBgcICQ==\"]]"
+    },
+    {
+      "name": "data_sub_repeat",
+      "devalue": "[[1,1],[\"DataView\",2,2,4],[\"ArrayBuffer\",\"AAECAwQFBgcICQ==\"]]"
+    },
+    {
+      "name": "bigint_repeat",
+      "devalue": "[[1,1],[\"BigInt64Array\",2],[\"ArrayBuffer\",\"AQAAAAAAAAACAAAAAAAAAAMAAAAAAAAA\"]]"
+    },
+    {
+      "name": "ordinary_shared",
+      "devalue": "[{\"buffer\":1,\"view\":2,\"again\":2,\"data\":3},[\"ArrayBuffer\",\"AAECAwQF\"],[\"Uint8Array\",1,1,3],[\"DataView\",1,2,2]]"
+    },
+    {
+      "name": "raw_float_bits",
+      "devalue": "[[\"Float64Array\",1],[\"ArrayBuffer\",\"AQAAAAAA+H8AAAAAAAAAgA==\"]]"
+    },
+    {
+      "name": "empty_copy",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "isolated_copies",
+      "devalue": "[{\"first\":1,\"again\":1,\"second\":3,\"self\":0},[\"Uint8Array\",2],[\"ArrayBuffer\",\"AQID\"],[\"Uint8Array\",4],[\"ArrayBuffer\",\"BAU=\"]]"
+    },
+    {
+      "name": "source_from",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "source_unsafe",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "source_concat",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "source_slice",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "source_subarray",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "source_unpooled",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "source_arraybuffer",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "source_vm",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "file_contents",
+      "devalue": "[{\"file\":1},[\"Uint8Array\",2],[\"ArrayBuffer\",\"ewogICJuYW1lIjogImRldmFsdWUiLAogICJkZXNjcmlwdGlvbiI6ICJHZXRzIHRoZSBqb2IgZG9uZSB3aGVuIEpTT04uc3RyaW5naWZ5IGNhbid0IiwKICAidmVyc2lvbiI6ICI1LjkuNCIsCiAgInJlcG9zaXRvcnkiOiAic3ZlbHRlanMvZGV2YWx1ZSIsCiAgInNpZGVFZmZlY3RzIjogZmFsc2UsCiAgImV4cG9ydHMiOiB7CiAgICAiLiI6IHsKICAgICAgInR5cGVzIjogIi4vdHlwZXMvaW5kZXguZC50cyIsCiAgICAgICJpbXBvcnQiOiAiLi9pbmRleC5qcyIsCiAgICAgICJkZWZhdWx0IjogIi4vaW5kZXguanMiCiAgICB9CiAgfSwKICAiZmlsZXMiOiBbCiAgICAiaW5kZXguanMiLAogICAgInNyYyIsCiAgICAidHlwZXMiCiAgXSwKICAidHlwZXMiOiAiLi90eXBlcy9pbmRleC5kLnRzIiwKICAiZGV2RGVwZW5kZW5jaWVzIjogewogICAgIkBjaGFuZ2VzZXRzL2NsaSI6ICJeMi4yOS42IiwKICAgICJAanMtdGVtcG9yYWwvcG9seWZpbGwiOiAiXjAuNS4xIiwKICAgICJAdHlwZXMvbm9kZSI6ICJeMjQuMTIuMCIsCiAgICAiZHRzLWJ1ZGR5IjogIl4wLjYuMiIsCiAgICAicHVibGludCI6ICJeMC4zLjEyIiwKICAgICJ0eXBlc2NyaXB0IjogIl41LjkuMiIsCiAgICAidXZ1IjogIl4wLjUuNiIKICB9LAogICJsaWNlbnNlIjogIk1JVCIsCiAgInR5cGUiOiAibW9kdWxlIiwKICAic2NyaXB0cyI6IHsKICAgICJjaGFuZ2VzZXQ6dmVyc2lvbiI6ICJjaGFuZ2VzZXQgdmVyc2lvbiIsCiAgICAiY2hhbmdlc2V0OnB1Ymxpc2giOiAiY2hhbmdlc2V0IHB1Ymxpc2giLAogICAgImJ1aWxkIjogImR0cy1idWRkeSIsCiAgICAidGVzdCI6ICJ1dnUiLAogICAgImJlbmNoIjogIm5vZGUgLS1hbGxvdy1uYXRpdmVzLXN5bnRheCAuL2JlbmNobWFya2luZy9ydW4uanMiLAogICAgImJlbmNoOmNvbXBhcmUiOiAibm9kZSAtLWFsbG93LW5hdGl2ZXMtc3ludGF4IC4vYmVuY2htYXJraW5nL2NvbXBhcmUvaW5kZXguanMiCiAgfQp9\"]]"
+    },
+    {
+      "name": "reduced_view",
+      "devalue": "[[\"View\",1],\"payload\"]"
+    },
+    {
+      "name": "reduced_buffer",
+      "devalue": "[[\"Uint8Array\",1],[\"Raw\",2],\"payload\"]"
+    },
+    {
+      "name": "browser_uint8",
+      "devalue": "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"AQID\"]]"
+    }
+  ]
+}

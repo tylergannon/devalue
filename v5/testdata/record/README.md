@@ -59,3 +59,12 @@ cannot preserve and custom reducer cases. It also writes
 which ports upstream's common flat fixtures into independently constructed
 native Zig cases. All three outputs use this one exact pin.
 Zig native tests consume the results without running Node.
+
+Binary-view inputs in `binary-values.mjs` write
+`../../../zig/testdata/binary-golden.json` and the byte input
+`../../../zig/testdata/binary-file-input.txt`. They cover upstream index/buffer
+fixtures and all twelve typed kinds plus DataView. Recording requires Node with
+Float16Array (use Node 26+), failing rather than silently omitting that kind.
+The browser-path example is recorded in a fresh Node process without Node
+globals. All expected wire bytes still come from the exact pinned devalue.
+Go flat codecs currently reject view tags; these fixtures are consumed by Zig.

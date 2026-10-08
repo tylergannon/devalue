@@ -1,0 +1,1 @@
+.{ .name = .devalue_consumer, .version = "0.0.0", .fingerprint = 0x9ccbfcf04a384b4c, .minimum_zig_version = "0.17.0", .dependencies = .{ .devalue = .{ .path = "../../zig" } }, .paths = .{ "build.zig", "build.zig.zon", "main.zig" } }

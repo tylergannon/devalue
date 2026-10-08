@@ -61,5 +61,18 @@ fn visit(e: *d.Graph, ev: d.Value, a: *d.Graph, av: d.Value, pairs: *std.ArrayLi
             try std.testing.expectEqualStrings(re.flags, an.regexp.flags);
         },
         .array_buffer => |bytes| try std.testing.expectEqualSlices(u8, bytes, an.array_buffer),
+        .typed_array => |v| {
+            try std.testing.expectEqual(v.kind, an.typed_array.kind);
+            try std.testing.expectEqual(v.byte_offset, an.typed_array.byte_offset);
+            try std.testing.expectEqual(v.length, an.typed_array.length);
+            try visit(e, v.buffer, a, an.typed_array.buffer, pairs);
+            try std.testing.expectEqualSlices(u8, try e.viewBytes(ev), try a.viewBytes(av));
+        },
+        .data_view => |v| {
+            try std.testing.expectEqual(v.byte_offset, an.data_view.byte_offset);
+            try std.testing.expectEqual(v.byte_length, an.data_view.byte_length);
+            try visit(e, v.buffer, a, an.data_view.buffer, pairs);
+            try std.testing.expectEqualSlices(u8, try e.viewBytes(ev), try a.viewBytes(av));
+        },
     }
 }

@@ -57,4 +57,5 @@ comptime {
     _ = @import("profile.zig");
     _ = @import("robustness.zig");
     _ = @import("upstream.zig");
+    _ = @import("binary.zig");
 }
