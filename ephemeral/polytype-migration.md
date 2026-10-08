@@ -1,11 +1,12 @@
 # Plan: move polytype and skgo onto github.com/tylergannon/devalue/v5
 
 Written 2026-09-25, when this repository was carved out of polytype at `e521921`
-(v1.2.0). Until this plan is done, polytype ships its own copy of the runtime at
-`github.com/tylergannon/polytype/devalue`. As of 2026-10-08 that copy predates
-the flat typed-array/DataView support in both modules here. Consumers must
-complete this migration to exchange binary views with Zig; a go.work alone
-does not redirect the legacy import path.
+(v1.2.0). The former bundled runtime at `github.com/tylergannon/polytype/devalue`
+predated the flat typed-array/DataView support in both modules here. Consumers
+using that legacy import path must migrate to exchange binary views with Zig;
+a go.work alone does not redirect it.
+
+Status 2026-10-08: Step 0 is complete ([devalue v5.0.0](https://github.com/tylergannon/devalue/releases/tag/v5.0.0), available from the Go proxy). Step 1 is complete ([polytype PR #163](https://github.com/tylergannon/polytype/pull/163), released as [v1.5.0](https://github.com/tylergannon/polytype/releases/tag/v1.5.0)). Step 2, skgo migration, is next. A fresh public consumer regenerated codecs, verified exact wire bytes and typed decoding with no replacements, and installed the published CLI; see `ephemeral/polytype-v1.5.0-public-consumer/` or the [release proof archive](https://github.com/tylergannon/polytype/releases/download/v1.5.0/polytype-v1.5.0-public-consumer.tar.gz). The instructions below retain the original handoff details.
 
 ## Decisions already made
 

@@ -1,0 +1,1 @@
+go: updates to go.sum needed, disabled by -mod=readonly
