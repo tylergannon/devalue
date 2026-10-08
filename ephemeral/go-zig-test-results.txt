@@ -1,11 +1,11 @@
 mise exec -- zig build test
 PASS
-ok  	github.com/tylergannon/devalue/v5	0.233s
+ok  	github.com/tylergannon/devalue/v5	0.270s
 PASS
-ok  	github.com/tylergannon/devalue/v6	0.471s
+ok  	github.com/tylergannon/devalue/v6	0.309s
 PASS
-ok  	github.com/tylergannon/devalue/v5	0.257s
+ok  	github.com/tylergannon/devalue/v5	0.235s
 PASS
-ok  	github.com/tylergannon/devalue/v6	0.263s
-ok  	github.com/tylergannon/devalue/v5	1.396s
-ok  	github.com/tylergannon/devalue/v6	1.435s
+ok  	github.com/tylergannon/devalue/v6	0.262s
+ok  	github.com/tylergannon/devalue/v5	1.352s
+ok  	github.com/tylergannon/devalue/v6	1.186s

@@ -17,3 +17,6 @@ decision: Each maintained module regenerates and pin-checks its own binary and e
 decision: Redirected polytype codegen and 42 selected skgo tests passed; full skgo example validation is unavailable because its frontend build is absent. This does not complete the separately requested consumer migration.
 
 friction: Installable root Zig package PR #3 landed during implementation review. Rebased onto 20a8d45, preserving addPackage/source_dir and integrating the interop step with that working directory. Root tests/lint passed; missing integration input fails explicitly. Request a full re-review of the final combined tree rather than rely on the older snapshot.
+
+correction: Opus caught a premature 6.x parse-error spelling in the new raw backing-slot guard. Preserve 5.9.4's Invalid data for a real slot with the wrong tag, and port its three exact upstream invalid-input rows. Missing/out-of-range/fractional references actually throw native TypeError in 5.9.4 (verified directly); those remain Go Invalid input rather than invent an upstream Invalid data expectation.
+decision: Guard requested Go interop flags in TestMain, so a renamed or unmatched test filter cannot silently pass a phase. Expand redirected skgo proof to its entire root package plus internal/formdata and internal/remotearg after Opus independently verified they pass.

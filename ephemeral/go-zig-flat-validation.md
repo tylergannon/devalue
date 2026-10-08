@@ -17,7 +17,8 @@ modules; it does not move v6 to upstream 6.x or claim full JavaScript parity.
   directory, Zig checks both against independent native graphs and emits fresh
   Zig-constructed documents, then both Go modules check them against their own
   native constructions. All three files must exist and have the complete case
-  count/names/version. CI invokes the same command with Go and pinned Zig.
+  count/names/version. TestMain rejects a requested Go exchange phase if its
+  test did not execute or complete; a renamed filter cannot silently pass. CI invokes the same command with Go and pinned Zig.
 - The corpus covers all twelve kinds plus DataView, full/sub/empty-end/empty
   storage, explicit odd-buffer extents, distinct equal/repeated views, cycles,
   shared backing storage, raw NaN/negative-zero bits and BigInt bytes, Node
@@ -58,8 +59,8 @@ modules; it does not move v6 to upstream 6.x or claim full JavaScript parity.
 - Disposable consumer copies explicitly redirected polytype/devalue runtime
   imports to this worktree's v5 module, leaving the codegen import path intact.
   Test binaries were compiled with scratch go.work and run with GOWORK=off.
-  Polytype's full codegen suite and selected skgo wire/document/deferred/stream
-  tests passed. Script and output: `ephemeral/verify-go-zig-consumers.sh` and
+  Polytype's full codegen suite, skgo's entire root package and its
+  internal/formdata and internal/remotearg packages passed. Script and output: `ephemeral/verify-go-zig-consumers.sh` and
   `ephemeral/go-zig-consumer-results.txt`. An initial failure exposed the new
   runtime prefix needed by polytype's fixture source tracker; the scratch check
   includes that migration fix and the migration plan records it.
@@ -79,3 +80,14 @@ surrogates. Zig excludes invalid Dates, URL/URLSearchParams, Temporal, async and
 expressions, and its documented handcrafted-document acceptance is stricter.
 Canonical Date/RegExp/BigInt metadata remains the shared input convention.
 These are named compatibility boundaries, not a full-upstream-parity claim.
+
+Implementation review round 01 found the raw guard's error text had advanced
+to 6.x. Both modules now preserve 5.9.4's `Invalid data` and port the three
+upstream index.test.js expectations. Missing/out-of-range/fractional backing
+references throw a native TypeError in the pinned JS, not `Invalid data`;
+they retain Go's generic `Invalid input`, as do post-revival/range failures.
+
+The expanded redirected consumer run passed four codegen tests, all 413 skgo
+root tests, and both internal parsing package suites. A Go invocation with a
+nonmatching filter and an explicit peer flag now exits 1; the same misuse no
+longer produces a successful integration phase.

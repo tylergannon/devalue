@@ -24,7 +24,7 @@ func (p *parser) hydrateView(index int, tag string, elems []json.RawMessage) (an
 	var bufferTag string
 	if json.Unmarshal(p.values[ref], &rawBuffer) != nil || len(rawBuffer) == 0 ||
 		json.Unmarshal(rawBuffer[0], &bufferTag) != nil || bufferTag != "ArrayBuffer" {
-		return nil, errInvalidInput
+		return nil, errInvalidData
 	}
 	backing, err := p.hydrate(ref, false)
 	if err != nil {

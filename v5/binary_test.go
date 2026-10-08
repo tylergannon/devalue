@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"os"
 	"reflect"
 	"strings"
@@ -12,6 +13,17 @@ import (
 
 var binaryEmit = flag.String("binary-emit", "", "Write native Go binary documents for the interop recipe")
 var binaryPeer = flag.String("binary-peer", "", "Read native Zig binary documents for the interop recipe")
+var binaryEmitted, binaryPeerVerified bool
+
+// Requested integration phases must execute even if a test/filter is renamed.
+func TestMain(m *testing.M) {
+	code := m.Run()
+	if (*binaryEmit != "" && !binaryEmitted) || (*binaryPeer != "" && !binaryPeerVerified) {
+		fmt.Fprintln(os.Stderr, "requested binary exchange phase did not complete")
+		code = 1
+	}
+	os.Exit(code)
+}
 
 type binaryCase struct {
 	Name string `json:"name"`
@@ -313,6 +325,7 @@ func TestBinaryGolden(t *testing.T) {
 		if err := os.WriteFile(*binaryEmit, data, 0o600); err != nil {
 			t.Fatal(err)
 		}
+		binaryEmitted = !t.Failed()
 	}
 }
 
@@ -328,6 +341,7 @@ func TestBinaryZigPeer(t *testing.T) {
 		}
 		t.Run(c.Name, func(t *testing.T) { checkBinaryDecode(t, c.Name, c.Wire) })
 	}
+	binaryPeerVerified = !t.Failed()
 }
 
 // Sources: v5.9.4/src/uneval.js, test/index.test.js typed arrays and shared

@@ -37,5 +37,8 @@ PY
 (cd "$scratch_dir" && go work init "$repo_dir/v5" "$scratch_dir/polytype" "$scratch_dir/skgo")
 (cd "$scratch_dir/polytype/devalue/codegen" && GOWORK="$scratch_dir/go.work" go test -c -o "$scratch_dir/codegen.test")
 (cd "$scratch_dir/polytype/devalue/codegen" && GOWORK=off "$scratch_dir/codegen.test" -test.v)
-(cd "$scratch_dir/skgo" && GOWORK="$scratch_dir/go.work" go test -c -o "$scratch_dir/skgo.test")
-(cd "$scratch_dir/skgo" && GOWORK=off "$scratch_dir/skgo.test" -test.run 'Test(Wire|.*Document|.*Stream|.*Deferred|.*Promise|AssembleTemplate)' -test.v)
+for package in . ./internal/formdata ./internal/remotearg; do
+    test_file="$scratch_dir/skgo-${package##*/}.test"
+    (cd "$scratch_dir/skgo" && GOWORK="$scratch_dir/go.work" go test -c -o "$test_file" "$package")
+    (cd "$scratch_dir/skgo/$package" && GOWORK=off "$test_file" -test.v)
+done

@@ -15,6 +15,8 @@ import (
 var (
 	//nolint:staticcheck // ST1005: the message is devalue's own, reproduced verbatim.
 	errInvalidInput = errors.New("Invalid input")
+	//nolint:staticcheck // ST1005: the raw-view guard's message in devalue 5.9.4.
+	errInvalidData = errors.New("Invalid data")
 	//nolint:staticcheck // ST1005: the message is devalue's own, reproduced verbatim.
 	errProto = errors.New("Cannot parse an object with a `__proto__` property")
 )
