@@ -1,0 +1,321 @@
+{
+  "devalue": "5.9.4",
+  "cases": [
+    {
+      "name": "primitive_integer_positive",
+      "devalue": "[42]"
+    },
+    {
+      "name": "primitive_integer_negative",
+      "devalue": "[-5]"
+    },
+    {
+      "name": "primitive_decimal_positive",
+      "devalue": "[0.1]"
+    },
+    {
+      "name": "primitive_decimal_negative",
+      "devalue": "[-0.1]"
+    },
+    {
+      "name": "primitive_nan",
+      "devalue": "-3"
+    },
+    {
+      "name": "primitive_infinity_positive",
+      "devalue": "-4"
+    },
+    {
+      "name": "primitive_infinity_negative",
+      "devalue": "-5"
+    },
+    {
+      "name": "primitive_zero",
+      "devalue": "[0]"
+    },
+    {
+      "name": "primitive_negative_zero",
+      "devalue": "-6"
+    },
+    {
+      "name": "primitive_string",
+      "devalue": "[\"woo!!!\"]"
+    },
+    {
+      "name": "primitive_boolean",
+      "devalue": "[true]"
+    },
+    {
+      "name": "primitive_bigint",
+      "devalue": "[[\"BigInt\",\"1\"]]"
+    },
+    {
+      "name": "primitive_undefined",
+      "devalue": "-1"
+    },
+    {
+      "name": "primitive_null",
+      "devalue": "[null]"
+    },
+    {
+      "name": "boxed_integer_positive",
+      "devalue": "[[\"Object\",1],42]"
+    },
+    {
+      "name": "boxed_integer_negative",
+      "devalue": "[[\"Object\",1],-2]"
+    },
+    {
+      "name": "boxed_decimal_positive",
+      "devalue": "[[\"Object\",1],0.1]"
+    },
+    {
+      "name": "boxed_decimal_negative",
+      "devalue": "[[\"Object\",1],-0.1]"
+    },
+    {
+      "name": "boxed_nan",
+      "devalue": "[[\"Object\",-3]]"
+    },
+    {
+      "name": "boxed_infinity_positive",
+      "devalue": "[[\"Object\",-4]]"
+    },
+    {
+      "name": "boxed_infinity_negative",
+      "devalue": "[[\"Object\",-5]]"
+    },
+    {
+      "name": "boxed_zero",
+      "devalue": "[[\"Object\",1],0]"
+    },
+    {
+      "name": "boxed_negative_zero",
+      "devalue": "[[\"Object\",-6]]"
+    },
+    {
+      "name": "boxed_string",
+      "devalue": "[[\"Object\",1],\"woo!!!\"]"
+    },
+    {
+      "name": "boxed_boolean",
+      "devalue": "[[\"Object\",1],true]"
+    },
+    {
+      "name": "boxed_bigint",
+      "devalue": "[[\"Object\",1],[\"BigInt\",\"1\"]]"
+    },
+    {
+      "name": "regexp",
+      "devalue": "[[\"RegExp\",\"regexp\",\"gim\"]]"
+    },
+    {
+      "name": "date",
+      "devalue": "[[\"Date\",\"2001-09-09T01:46:40.000Z\"]]"
+    },
+    {
+      "name": "array",
+      "devalue": "[[1,2,3],\"a\",\"b\",\"c\"]"
+    },
+    {
+      "name": "array_zero",
+      "devalue": "[[1,-6],0]"
+    },
+    {
+      "name": "array_empty",
+      "devalue": "[[]]"
+    },
+    {
+      "name": "array_sparse",
+      "devalue": "[[-2,1,-2],\"b\"]"
+    },
+    {
+      "name": "array_very_sparse",
+      "devalue": "[[-7,1000001,1000000,1],\"x\"]"
+    },
+    {
+      "name": "array_multi_sparse",
+      "devalue": "[[-7,21,10,1,20,2],\"a\",\"b\"]"
+    },
+    {
+      "name": "object",
+      "devalue": "[{\"foo\":1,\"x-y\":2},\"bar\",\"z\"]"
+    },
+    {
+      "name": "set",
+      "devalue": "[[\"Set\",1,2,3],1,2,3]"
+    },
+    {
+      "name": "map",
+      "devalue": "[[\"Map\",1,2],\"a\",\"b\"]"
+    },
+    {
+      "name": "buffer",
+      "devalue": "[[\"ArrayBuffer\",\"AQID\"]]"
+    },
+    {
+      "name": "string_newline",
+      "devalue": "[\"a\\nb\"]"
+    },
+    {
+      "name": "string_quotes",
+      "devalue": "[\"\\\"yar\\\"\"]"
+    },
+    {
+      "name": "string_surrogate_pair",
+      "devalue": "[\"𝌆\"]"
+    },
+    {
+      "name": "string_nul",
+      "devalue": "[\"\\u0000\"]"
+    },
+    {
+      "name": "string_control",
+      "devalue": "[\"\\u0001\"]"
+    },
+    {
+      "name": "string_control_extreme",
+      "devalue": "[\"\\u001f\"]"
+    },
+    {
+      "name": "string_backslash",
+      "devalue": "[\"\\\\\"]"
+    },
+    {
+      "name": "cycle_map",
+      "devalue": "[[\"Map\",1,0],\"self\"]"
+    },
+    {
+      "name": "cycle_set",
+      "devalue": "[[\"Set\",0,1],42]"
+    },
+    {
+      "name": "cycle_array",
+      "devalue": "[[0]]"
+    },
+    {
+      "name": "cycle_object",
+      "devalue": "[{\"self\":0}]"
+    },
+    {
+      "name": "cycle_null_object",
+      "devalue": "[[\"null\",\"self\",0]]"
+    },
+    {
+      "name": "cycle_class_equivalent",
+      "devalue": "[{\"foo\":1,\"self\":0},\"bar\"]"
+    },
+    {
+      "name": "cycle_mutual",
+      "devalue": "[[1,2],{\"second\":2},{\"first\":1}]"
+    },
+    {
+      "name": "repeat_string",
+      "devalue": "[[1,1],\"a string\"]"
+    },
+    {
+      "name": "repeat_null",
+      "devalue": "[[1,1],null]"
+    },
+    {
+      "name": "repeat_nan",
+      "devalue": "[[-3,-3]]"
+    },
+    {
+      "name": "repeat_number_box",
+      "devalue": "[[1,1],[\"Object\",2],42]"
+    },
+    {
+      "name": "repeat_bigint_box",
+      "devalue": "[[1,1],[\"Object\",2],[\"BigInt\",\"1\"]]"
+    },
+    {
+      "name": "repeat_nan_box",
+      "devalue": "[[1,1],[\"Object\",-3]]"
+    },
+    {
+      "name": "repeat_object",
+      "devalue": "[[1,1],{}]"
+    },
+    {
+      "name": "repeat_map",
+      "devalue": "[[1,1],[\"Map\"]]"
+    },
+    {
+      "name": "repeat_set",
+      "devalue": "[[1,1],[\"Set\"]]"
+    },
+    {
+      "name": "repeat_regexp",
+      "devalue": "[[1,1],[\"RegExp\",\"regexp\"]]"
+    },
+    {
+      "name": "repeat_date",
+      "devalue": "[[1,1],[\"Date\",\"2001-09-09T01:46:40.000Z\"]]"
+    },
+    {
+      "name": "repeat_map_key",
+      "devalue": "[[1,3],{\"id\":2},1,[\"Map\",1,4],\"v\"]"
+    },
+    {
+      "name": "interlinked_map_keys",
+      "devalue": "[[\"Map\",1,3,4,8,6,9],{\"id\":2},1,[\"Map\",4,2,6,2],{\"id\":5},2,{\"id\":7},3,[\"Map\",1,2,6,2],[\"Map\",1,2,4,2]]"
+    },
+    {
+      "name": "xss_string",
+      "devalue": "[\"\\u003C/script>\\u003Cscript src='https://evil.com/script.js'>alert('pwned')\\u003C/script>\\u003Cscript>\"]"
+    },
+    {
+      "name": "xss_key",
+      "devalue": "[{\"\\u003Csvg onload=alert(\\\"xss_works\\\")>\":1},\"bar\"]"
+    },
+    {
+      "name": "xss_regexp",
+      "devalue": "[[\"RegExp\",\"[\\u003C/script>\\u003Cscript>alert('xss')//]\"]]"
+    },
+    {
+      "name": "xss_regexp_repeat",
+      "devalue": "[[1,1],[\"RegExp\",\"[\\u003C/script>\\u003Cscript>alert('xss')//]\"]]"
+    },
+    {
+      "name": "null_object_empty",
+      "devalue": "[[\"null\"]]"
+    },
+    {
+      "name": "plain_object_empty",
+      "devalue": "[{}]"
+    },
+    {
+      "name": "enumerable_object",
+      "devalue": "[{\"x\":1},1]"
+    },
+    {
+      "name": "null_object_keys",
+      "devalue": "[[\"null\",\"0\",1,\"\",2,\"constructor\",3,\"toString\",4],\"numeric\",\"empty\",\"constructor\",\"toString\"]"
+    },
+    {
+      "name": "custom_nested",
+      "devalue": "[[1,1],[\"Foo\",2],{\"bar\":3},[\"Bar\",4],{\"answer\":5},42]"
+    },
+    {
+      "name": "function_wrapped",
+      "devalue": "[[\"FunctionRef\",1],\"(x) => x * 2\"]"
+    },
+    {
+      "name": "function_nested",
+      "devalue": "[{\"fn\":1,\"nested\":3},[\"FunctionRef\",2],\"(x) => x * 2\",{\"data\":4},42]"
+    },
+    {
+      "name": "native_alias_cycle",
+      "devalue": "[{\"first\":1,\"alias\":1,\"self\":0},[2,-1],\"\\u003Chi>\\n😀\"]"
+    },
+    {
+      "name": "native_boxed_variants",
+      "devalue": "[[1,3,5,7],[\"Object\",2],42,[\"Object\",4],\"hi\",[\"Object\",6],[\"BigInt\",\"0\"],[\"Object\",-6]]"
+    },
+    {
+      "name": "native_builtins",
+      "devalue": "[[1,2,3,4,5,7,9,11],[\"BigInt\",\"-123456789012345678901\"],[\"Date\",\"1969-12-31T23:59:59.999Z\"],[\"RegExp\",\"a\\\\/b\\\\n\",\"my\"],[\"ArrayBuffer\",\"AP8=\"],[\"Object\",6],false,[\"null\",\"x\",8],1,[\"Map\",10,7,9,9],\"k\",[\"Set\",12,-3,11],0]"
+    }
+  ]
+}

@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 import { stringify, uneval } from "devalue";
 
 import { values } from "./values.mjs";
+import { zigValues } from "./zig-values.mjs";
+import { upstreamValues } from "./upstream-values.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -29,6 +31,16 @@ writeFileSync(
   JSON.stringify({ devalue: installed, cases }, null, 2) + "\n",
 );
 process.stdout.write(`wrote ${cases.length} cases from devalue ${installed}\n`);
+
+const zigCases = zigValues.map(([name, value, reducers]) => ({ name, devalue: stringify(value, reducers) }));
+writeFileSync(join(here, "..", "..", "..", "zig", "testdata", "flat-golden.json"),
+  JSON.stringify({ devalue: installed, cases: zigCases }, null, 2) + "\n");
+process.stdout.write(`wrote ${zigCases.length} Zig profile cases from devalue ${installed}\n`);
+
+const upstreamCases = upstreamValues.map(([name, value, reducers]) => ({ name, devalue: stringify(value, reducers) }));
+writeFileSync(join(here, "..", "..", "..", "zig", "testdata", "upstream-flat-golden.json"),
+  JSON.stringify({ devalue: installed, cases: upstreamCases }, null, 2) + "\n");
+process.stdout.write(`wrote ${upstreamCases.length} upstream-native cases from devalue ${installed}\n`);
 
 // installedVersion reads the version of the devalue package that the import
 // above resolved to. Its exports map hides package.json, so walk up from the

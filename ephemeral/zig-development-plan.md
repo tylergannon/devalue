@@ -35,6 +35,13 @@ complexity for every order is not an initial acceptance criterion. Preserve
 upstream resource-safety behavior without making general speed optimization a
 prerequisite for the first working version.
 
+Latest sequencing (2026-10-07): complete correctness and public usability of the
+basic flat codec first, then return to typed views, expression generation and
+async serialization. This is an interim implementation milestone, not permission
+to land with reduced upstream behavioral fidelity. Keep standard hash indexes
+and explicit ordered views unless correctness or consumer use requires a change;
+optimal insertion-order performance and changing to ArrayHashMap are not gates.
+
 ## Scope and contracts
 
 The initial supported values are null, undefined, booleans, JavaScript f64

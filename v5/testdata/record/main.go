@@ -95,6 +95,15 @@ func run() error {
 	write("special_boxed", `Object(42)`)
 	write("special_array_buffer", `new Uint8Array([1, 2, 3]).buffer`)
 	write("special_null_proto", `Object.assign(Object.create(null), {"x": 1})`)
+	write("boxed_boolean", `Object(false)`)
+	write("boxed_short_string", `Object("hi")`)
+	write("date_negative", `new Date(-1)`)
+	write("regexp_empty", `new RegExp("")`)
+	write("regexp_escaped", `new RegExp("a/b\\n", "my")`)
+	write("map_graph", `(() => { const o = {x: 1}; const m = new Map(); m.set(o, o); m.set("self", m); return m })()`)
+	write("set_graph", `(() => { const s = new Set(); s.add(NaN); s.add(NaN); s.add(-0); s.add(0); s.add(s); return s })()`)
+	write("buffer_repeated", `(() => { const b = new Uint8Array([0, 255]).buffer; return [b, b] })()`)
+	write("null_proto_order", `Object.assign(Object.create(null), {z: false, "2": "two", "1": "one"})`)
 
 	// Repeated primitives: devalue hoists a repeated BigInt, or string of at
 	// least 128 UTF-16 code units, when that makes the output shorter.

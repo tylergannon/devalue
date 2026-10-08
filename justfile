@@ -1,12 +1,12 @@
 # Every major version is its own module in its own vN/ directory.
 modules := `ls -d v*/go.mod | xargs -n1 dirname | tr '\n' ' '`
 
-test:
+test: test-zig
     #!/usr/bin/env bash
     set -euo pipefail
     for m in {{modules}}; do (cd "$m" && go test ./...); done
 
-lint:
+lint: lint-zig
     #!/usr/bin/env bash
     set -euo pipefail
     for m in {{modules}}; do
@@ -17,3 +17,10 @@ lint:
 # Regenerate one module's golden.json from its pinned devalue (installs it first).
 record module:
     cd {{module}} && pnpm install --frozen-lockfile && go run ./testdata/record && node testdata/record/record.mjs
+
+# Zig tests use shared recorded fixtures without Node.
+test-zig:
+    cd zig && mise exec -- zig build test
+
+lint-zig:
+    cd zig && mise exec -- zig build fmt

@@ -1,0 +1,29 @@
+Expected aggregate test rejection, exit 1
+cd zig && mise exec -- zig build test
+test
++- run test 14 pass, 1 fail (15 total)
+error: 'tests.test.aggregate gate deliberate failure probe' failed:
+       /Users/tyler/.codex/worktrees/zig-development-setup/devalue/zig/tests/tests.zig:61:50: 0x100b07397 in test.aggregate gate deliberate failure probe (test)
+       test "aggregate gate deliberate failure probe" { return error.DeliberateFailure; }
+                                                        ^
+failed command: cd . && ./.zig-cache/o/b85162b3b05fbdad1bfac7e0a0d6af42/test --cache-dir=./.zig-cache --seed=0xfcc2fe03 --listen=-
+
+Build Summary: 2/4 steps succeeded (1 failed); 14/15 tests passed (1 failed)
+test transitive failure
++- run test 14 pass, 1 fail (15 total)
+
+error: recipe `test-zig` failed on line 23 with exit code 1
+
+Expected formatting rejection, exit 1
+cd zig && mise exec -- zig build fmt
+fmt
++- zig fmt --check failure
+error: tests/tests.zig: non-conforming formatting
+error: process exited with code 1
+failed command: /Users/tyler/.local/share/mise/installs/zig/0.17.0/zig fmt --check build.zig src tests bench.zig
+
+Build Summary: 0/2 steps succeeded (1 failed)
+fmt transitive failure
++- zig fmt --check failure
+
+error: recipe `lint-zig` failed on line 26 with exit code 1

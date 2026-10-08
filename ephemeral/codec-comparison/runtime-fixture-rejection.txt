@@ -1,0 +1,32 @@
+Warm-cache fixture metadata mutation rejected, exit 1
+cd zig && mise exec -- zig build test
+test
++- run test 14 pass, 1 fail (15 total)
+error: 'tests.test.all shared pinned upstream corpus cases' failed:
+       ====== expected this output: =========
+       5.9.4␃
+       
+       ======== instead found this: =========
+       0.0.0␃
+       
+       ======================================
+       First difference occurs on line 1:
+       expected:
+       5.9.4
+       ^ ('\x35')
+       found:
+       0.0.0
+       ^ ('\x30')
+       /Users/tyler/.local/share/mise/installs/zig/0.17.0/lib/std/testing.zig:696:9: 0x102e7352b in expectEqualStrings (test)
+               return error.TestExpectedEqual;
+               ^
+       /Users/tyler/.codex/worktrees/zig-development-setup/devalue/zig/tests/tests.zig:39:5: 0x102e73947 in test.all shared pinned upstream corpus cases (test)
+           try std.testing.expectEqualStrings(d.upstream_version, fixture.value.devalue);
+           ^
+failed command: cd . && ./.zig-cache/o/7af540f5e4322caf0144421178998cf1/test --cache-dir=./.zig-cache --seed=0xab5be8de --listen=-
+
+Build Summary: 2/4 steps succeeded (1 failed); 14/15 tests passed (1 failed)
+test transitive failure
++- run test 14 pass, 1 fail (15 total)
+
+error: recipe `test-zig` failed on line 23 with exit code 1

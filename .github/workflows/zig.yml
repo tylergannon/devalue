@@ -1,0 +1,16 @@
+name: Zig
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v3
+      - uses: extractions/setup-just@v3
+      - run: just test-zig
+      - run: just lint-zig

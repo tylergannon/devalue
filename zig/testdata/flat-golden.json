@@ -1,0 +1,145 @@
+{
+  "devalue": "5.9.4",
+  "cases": [
+    {
+      "name": "distinct_empty",
+      "devalue": "[[1,2,3,4],[],[],[\"ArrayBuffer\",\"\"],[\"ArrayBuffer\",\"\"]]"
+    },
+    {
+      "name": "date_identities",
+      "devalue": "[[1,1,2],[\"Date\",\"1970-01-01T00:00:00.000Z\"],[\"Date\",\"1970-01-01T00:00:00.000Z\"]]"
+    },
+    {
+      "name": "regexp_identities",
+      "devalue": "[[1,1,2],[\"RegExp\",\"x\"],[\"RegExp\",\"x\"]]"
+    },
+    {
+      "name": "date_min",
+      "devalue": "[[\"Date\",\"-271821-04-20T00:00:00.000Z\"]]"
+    },
+    {
+      "name": "date_max",
+      "devalue": "[[\"Date\",\"+275760-09-13T00:00:00.000Z\"]]"
+    },
+    {
+      "name": "date_year_zero",
+      "devalue": "[[\"Date\",\"0000-01-01T00:00:00.000Z\"]]"
+    },
+    {
+      "name": "date_year_negative",
+      "devalue": "[[\"Date\",\"-000001-01-01T00:00:00.000Z\"]]"
+    },
+    {
+      "name": "date_year_expanded",
+      "devalue": "[[\"Date\",\"+010000-01-01T00:00:00.000Z\"]]"
+    },
+    {
+      "name": "sparse_max",
+      "devalue": "[[-7,4294967295,0,-1,42,1,4294967294,2],\"x\",null]"
+    },
+    {
+      "name": "unicode_controls",
+      "devalue": "[\"\\u0000\\u0001\\b\\f\\n\\r\\t\\\"\\\\\\u003C\\u2028\\u2029雪😀\"]"
+    },
+    {
+      "name": "key_boundaries",
+      "devalue": "[{\"0\":1,\"2\":2,\"4294967294\":3,\"z\":4,\"01\":5,\"4294967295\":6,\"-1\":7,\"1.0\":8,\"😀\":9},8,7,3,1,2,4,5,6,9]"
+    },
+    {
+      "name": "number_0",
+      "devalue": "[0.000001]"
+    },
+    {
+      "name": "number_1",
+      "devalue": "[1e-7]"
+    },
+    {
+      "name": "number_2",
+      "devalue": "[100000000000000000000]"
+    },
+    {
+      "name": "number_3",
+      "devalue": "[1e+21]"
+    },
+    {
+      "name": "number_4",
+      "devalue": "[5e-324]"
+    },
+    {
+      "name": "number_5",
+      "devalue": "[1.7976931348623157e+308]"
+    },
+    {
+      "name": "number_6",
+      "devalue": "[9007199254740991]"
+    },
+    {
+      "name": "number_7",
+      "devalue": "[9007199254740992]"
+    },
+    {
+      "name": "number_8",
+      "devalue": "[1.0000000000000001e-7]"
+    },
+    {
+      "name": "number_9",
+      "devalue": "[0.0000010000000000000002]"
+    },
+    {
+      "name": "number_10",
+      "devalue": "[999999999999999900000]"
+    },
+    {
+      "name": "number_11",
+      "devalue": "[1.0000000000000001e+21]"
+    },
+    {
+      "name": "number_12",
+      "devalue": "[9.999999999999997e-7]"
+    },
+    {
+      "name": "number_13",
+      "devalue": "[9.999999999999998e-8]"
+    },
+    {
+      "name": "number_14",
+      "devalue": "[99999999999999980000]"
+    },
+    {
+      "name": "number_15",
+      "devalue": "[100000000000000020000]"
+    },
+    {
+      "name": "sparse_boundary_3",
+      "devalue": "[[1,-2,-2],\"x\"]"
+    },
+    {
+      "name": "sparse_boundary_4",
+      "devalue": "[[-7,4,0,1],\"x\"]"
+    },
+    {
+      "name": "sparse_boundary_5",
+      "devalue": "[[-7,5,0,1],\"x\"]"
+    },
+    {
+      "name": "sparse_boundary_6",
+      "devalue": "[[-7,6,0,1],\"x\"]"
+    },
+    {
+      "name": "custom_self",
+      "devalue": "[[\"Foo\",1],{\"name\":2,\"ref\":0},\"self\"]"
+    },
+    {
+      "name": "custom_mutual",
+      "devalue": "[[\"Foo\",1],{\"name\":2,\"ref\":3},\"outer\",[\"Bar\",4],{\"name\":5,\"ref\":0},\"inner\"]"
+    },
+    {
+      "name": "custom_primitive",
+      "devalue": "[[\"Answer\",1],\"forty-two\"]"
+    },
+    {
+      "name": "custom_name",
+      "devalue": "[[\"Name< \",1],\"forty-two\"]"
+    }
+  ]
+}

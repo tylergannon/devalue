@@ -1,0 +1,3 @@
+368 upstream fixtures byte-equal in Go v5 and v6
+76 upstream-native fixture documents byte-equal in Go v5 and v6 (3 custom fixtures checked natively)
+public Zig consumer output and all five benchmark workload bytes/content agree with Go v5 and v6
