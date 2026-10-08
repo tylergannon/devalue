@@ -82,7 +82,7 @@ func identityKey(v any) (any, bool) {
 		}
 		return ptrKey{"array", reflect.ValueOf(t).Pointer(), len(t)}, true
 	case ArrayBuffer:
-		if len(t) == 0 {
+		if len(t) == 0 && cap(t) == 0 {
 			return nil, false
 		}
 		return ptrKey{"buffer", reflect.ValueOf(t).Pointer(), len(t)}, true

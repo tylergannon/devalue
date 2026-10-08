@@ -36,6 +36,8 @@ func typedArrayElements(kind TypedArrayKind, buf ArrayBuffer) (string, error) {
 			parts[i] = strconv.Itoa(int(int16(binary.LittleEndian.Uint16(b))))
 		case Uint16Array:
 			parts[i] = strconv.Itoa(int(binary.LittleEndian.Uint16(b)))
+		case Float16Array:
+			parts[i] = formatFloatElement(float16Number(binary.LittleEndian.Uint16(b)))
 		case Int32Array:
 			parts[i] = strconv.Itoa(int(int32(binary.LittleEndian.Uint32(b))))
 		case Uint32Array:
@@ -50,9 +52,39 @@ func typedArrayElements(kind TypedArrayKind, buf ArrayBuffer) (string, error) {
 			parts[i] = strconv.FormatInt(int64(binary.LittleEndian.Uint64(b)), 10) + "n"
 		case BigUint64Array:
 			parts[i] = strconv.FormatUint(binary.LittleEndian.Uint64(b), 10) + "n"
+		default:
+			return "", errors.New("devalue: unhandled typed array kind")
 		}
 	}
 	return strings.Join(parts, ","), nil
+}
+
+// validView checks JavaScript-constructible geometry without multiplying or
+// adding untrusted extents. Explicitly bounded views may use odd-sized buffers.
+func validView(buffer ArrayBuffer, offset, length, width int) bool {
+	return width > 0 && offset >= 0 && length >= 0 && offset <= len(buffer) &&
+		length <= len(buffer)-offset && offset%width == 0 && length%width == 0
+}
+
+func float16Number(bits uint16) float64 {
+	exponent := int((bits >> 10) & 31)
+	fraction := int(bits & 1023)
+	var value float64
+	switch exponent {
+	case 0:
+		value = math.Ldexp(float64(fraction), -24)
+	case 31:
+		value = math.Inf(1)
+		if fraction != 0 {
+			value = math.NaN()
+		}
+	default:
+		value = math.Ldexp(float64(1024+fraction), exponent-25)
+	}
+	if bits&0x8000 != 0 {
+		value = -value
+	}
+	return value
 }
 
 // formatFloatElement renders one float element. `toString()` collapses -0 to

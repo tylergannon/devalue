@@ -1,0 +1,5 @@
+cd zig && mise exec -- zig build fmt
+No vulnerabilities found.
+0 issues.
+No vulnerabilities found.
+0 issues.

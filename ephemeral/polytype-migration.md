@@ -2,8 +2,10 @@
 
 Written 2026-09-25, when this repository was carved out of polytype at `e521921`
 (v1.2.0). Until this plan is done, polytype ships its own copy of the runtime at
-`github.com/tylergannon/polytype/devalue`, identical to `v5/` here at devalue
-5.9.4 parity.
+`github.com/tylergannon/polytype/devalue`. As of 2026-10-08 that copy predates
+the flat typed-array/DataView support in both modules here. Consumers must
+complete this migration to exchange binary views with Zig; a go.work alone
+does not redirect the legacy import path.
 
 ## Decisions already made
 
@@ -31,6 +33,10 @@ Go proxy. polytype cannot require an untagged module (a `replace` would break
   and goldens that embed it: `codegen/testdata/recursive/generated/codec/`,
   `devalue/codegen/testdata/fixture/`, and the `generate_test.go` and
   `cache_inputs_test.go` expectations.
+- Track the new runtime prefix in `devalue/codegen/generate_test.go` with
+  a second TrackFixtureDependencies call, and update the runtime-prefix
+  assertion in `cache_inputs_test.go`; the old polytype-only tracker otherwise
+  misses this dependency.
 - Point the fixture tests that import the runtime (`codec_test.go` beside each
   generated fixture) at the new module. `codegen/codegen.go` and
   `typescript/library_test.go` import `devalue/codegen`, which keeps its path.

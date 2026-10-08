@@ -200,7 +200,7 @@ func TestParseInvalid(t *testing.T) {
 		{name: "prototype pollution via Object wrapper", json: `[["Object",{"__proto__":1}],{}]`, message: "Invalid input"},
 		{name: "bad index", json: `[{"0":1,"toString":"push"},"hello"]`, message: "Invalid input"},
 		{name: "custom reviver self-reference", json: `[["Custom",0]]`, revivers: map[string]func(any) (any, error){"Custom": func(v any) (any, error) { return v, nil }}, message: "Invalid circular reference"},
-		{name: "unknown type", json: `[["Uint8Array",1],["ArrayBuffer","AQID"]]`, message: "Unknown type Uint8Array"},
+		{name: "unknown type", json: `[["UnknownView",1],["ArrayBuffer","AQID"]]`, message: "Unknown type UnknownView"},
 		{name: "oversized sparse array", json: `[[-7,4000000,0,1],"x"]`, message: "exceeds the limit"},
 	}
 

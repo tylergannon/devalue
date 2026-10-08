@@ -9,3 +9,9 @@ decision: Opus plan review requires Float16 Uneval and empty-buffer expression e
 correction: Consumer go.work verification alone is vacuous while imports still point at polytype/devalue; use explicitly redirected scratch consumer copies or report it unavailable. Production migration remains separate.
 
 decision: Geometry validation rejects views JavaScript cannot construct; preserve upstream 5.9.4's existing odd-buffer Uneval quirk rather than back-porting 6.x expression spelling. Opus independently confirmed both current Go outputs already match the pin.
+
+friction: A redirected polytype codegen test compiled and ran generated codecs against v5, but its fixture dependency assertion still filtered only the polytype module. The migration must track the independent runtime prefix as well; updated the scratch check and migration plan rather than claim an unredirected consumer test proves compatibility.
+
+decision: Binary exchange is now a normal root test and CI check, with both Go modules producing native inputs for Zig and both decoding independently generated Zig output. Missing/empty peer files and wrong count/name/version fail.
+decision: Each maintained module regenerates and pin-checks its own binary and expression corpus; v6 recording does not overwrite Zig's v5 fixtures. The runtime remains additive and both modules still target 5.9.4.
+decision: Redirected polytype codegen and 42 selected skgo tests passed; full skgo example validation is unavailable because its frontend build is absent. This does not complete the separately requested consumer migration.

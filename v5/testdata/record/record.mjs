@@ -8,7 +8,7 @@ import { stringify, uneval } from "devalue";
 import { values } from "./values.mjs";
 import { zigValues } from "./zig-values.mjs";
 import { upstreamValues } from "./upstream-values.mjs";
-import { binaryValues, fileInput, browserWire } from "./binary-values.mjs";
+import { binaryValues, binaryExpressionValues, fileInput, browserWire } from "./binary-values.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -32,6 +32,22 @@ writeFileSync(
   JSON.stringify({ devalue: installed, cases }, null, 2) + "\n",
 );
 process.stdout.write(`wrote ${cases.length} cases from devalue ${installed}\n`);
+
+
+// Every module regenerates its binary expectations from its own installed pin.
+const moduleBinaryCases = binaryValues.map(([name,value,reducers]) =>
+  ({name,devalue:stringify(value,reducers)}));
+moduleBinaryCases.push({name:'browser_uint8',devalue:browserWire});
+writeFileSync(join(here,'..','binary-golden.json'),
+  JSON.stringify({devalue:installed,cases:moduleBinaryCases},null,2)+'\n');
+const expressionCases = binaryExpressionValues.map(([name,value]) => {
+  try { return {name,uneval:uneval(value)}; }
+  catch(error) { return {name,error:error.message}; }
+});
+writeFileSync(join(here,'..','binary-uneval-golden.json'),
+  JSON.stringify({devalue:installed,cases:expressionCases},null,2)+'\n');
+writeFileSync(join(here,'..','binary-file-input.txt'),fileInput);
+process.stdout.write(`wrote ${moduleBinaryCases.length} binary and ${expressionCases.length} binary expression cases from devalue ${installed}\n`);
 
 const zigCases = zigValues.map(([name, value, reducers]) => ({ name, devalue: stringify(value, reducers) }));
 writeFileSync(join(here, "..", "..", "..", "zig", "testdata", "flat-golden.json"),

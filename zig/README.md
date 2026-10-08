@@ -3,7 +3,7 @@
 An experimental allocator-aware flat-format codec targeting **devalue 5.9.4**,
 with **Zig 0.17.0**. Successful encodings match upstream JavaScript bytes for
 values in the profile below. The Go v5 and v6 implementations currently target
-the same release; their flat codecs do not yet support binary views. This package
+the same release and support the same binary view tags. This package
 does not implement `uneval` expressions or claim
 all JavaScript devalue features.
 
@@ -186,3 +186,10 @@ claim follows from language choice; results vary by workload and allocator.
 
 This package is BSD-0-Clause (`LICENSE`); upstream devalue attribution and its
 MIT license are included in `LICENSE-devalue`.
+
+`just test-interop` exchanges all 111 binary fixture inputs with both Go modules
+using independently constructed native graphs on each side. CI runs the same
+check. Owned Go empty buffers use `NewArrayBuffer`; Go's empty-array and
+Date/RegExp identity limits and sparse-array length limit still apply. Canonical
+upstream-produced values form the common profile; Go accepts JS constructor
+coercions that this Zig profile deliberately rejects.

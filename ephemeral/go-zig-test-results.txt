@@ -1,0 +1,11 @@
+cd zig && mise exec -- zig build test
+PASS
+ok  	github.com/tylergannon/devalue/v5	0.345s
+PASS
+ok  	github.com/tylergannon/devalue/v6	0.611s
+PASS
+ok  	github.com/tylergannon/devalue/v5	0.257s
+PASS
+ok  	github.com/tylergannon/devalue/v6	0.259s
+ok  	github.com/tylergannon/devalue/v5	1.202s
+ok  	github.com/tylergannon/devalue/v6	1.233s

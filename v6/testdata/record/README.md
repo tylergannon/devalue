@@ -51,3 +51,8 @@ repository's `AGENTS.md`.
 6. Before releasing, run each downstream consumer's tests (polytype's
    `devalue/codegen`, skgo) against the change through a `go.work` that uses
    both checkouts.
+
+The module-local binary recorder (`binary-values.mjs`) also writes
+`../binary-golden.json`, `../binary-uneval-golden.json` and the static byte
+input. Its pin is checked alongside the main corpus by native tests. It does
+not write Zig fixtures; Zig's profile continues to use the v5 pin.

@@ -1,0 +1,482 @@
+=== RUN   TestFixtureDependenciesIncludeTheRuntime
+=== PAUSE TestFixtureDependenciesIncludeTheRuntime
+=== RUN   TestGeneratedCodecsCompileAndRun
+=== PAUSE TestGeneratedCodecsCompileAndRun
+=== RUN   TestSanitizedNameCollisionInOnePackage
+=== PAUSE TestSanitizedNameCollisionInOnePackage
+=== RUN   TestGenerateRefusals
+=== PAUSE TestGenerateRefusals
+=== CONT  TestFixtureDependenciesIncludeTheRuntime
+=== CONT  TestGeneratedCodecsCompileAndRun
+=== CONT  TestGenerateRefusals
+=== RUN   TestGenerateRefusals/package_name_is_required
+=== CONT  TestSanitizedNameCollisionInOnePackage
+=== RUN   TestGenerateRefusals/nil_root
+=== RUN   TestGenerateRefusals/grammar_admission_applies_to_roots
+=== RUN   TestGenerateRefusals/anonymous_struct_under_a_slice
+=== RUN   TestGenerateRefusals/anonymous_struct_root
+--- PASS: TestGenerateRefusals (0.00s)
+    --- PASS: TestGenerateRefusals/package_name_is_required (0.00s)
+    --- PASS: TestGenerateRefusals/nil_root (0.00s)
+    --- PASS: TestGenerateRefusals/grammar_admission_applies_to_roots (0.00s)
+    --- PASS: TestGenerateRefusals/anonymous_struct_under_a_slice (0.00s)
+    --- PASS: TestGenerateRefusals/anonymous_struct_root (0.00s)
+--- PASS: TestFixtureDependenciesIncludeTheRuntime (0.00s)
+--- PASS: TestSanitizedNameCollisionInOnePackage (0.02s)
+--- PASS: TestGeneratedCodecsCompileAndRun (0.72s)
+PASS
+=== RUN   TestAssembleNoCSPConfigured_LeavesTheDocumentUnchanged
+--- PASS: TestAssembleNoCSPConfigured_LeavesTheDocumentUnchanged (0.00s)
+=== RUN   TestStreamedChunkCarriesTheSameNonceAsTheBootScript
+--- PASS: TestStreamedChunkCarriesTheSameNonceAsTheBootScript (0.01s)
+=== RUN   TestStreamedChunkCarriesNoAttributeInHashMode
+--- PASS: TestStreamedChunkCarriesNoAttributeInHashMode (0.01s)
+=== RUN   TestDeferredValueStreams
+--- PASS: TestDeferredValueStreams (0.02s)
+=== RUN   TestDeferredFailureIsAnErrorChunk
+--- PASS: TestDeferredFailureIsAnErrorChunk (0.00s)
+=== RUN   TestADeferredBelowTheTopLevelStreams
+--- PASS: TestADeferredBelowTheTopLevelStreams (0.00s)
+=== RUN   TestAPromisedValueMayItselfPromise
+--- PASS: TestAPromisedValueMayItselfPromise (0.00s)
+=== RUN   TestWireEmitsDevalueBytes
+=== PAUSE TestWireEmitsDevalueBytes
+=== RUN   TestWireAcceptsDevalueBytes
+=== PAUSE TestWireAcceptsDevalueBytes
+=== RUN   TestAssembleTemplateAllPlaceholders
+--- PASS: TestAssembleTemplateAllPlaceholders (0.00s)
+=== RUN   TestDocumentUsesTypedPublicEnvironmentAndStaticPlaceholders
+--- PASS: TestDocumentUsesTypedPublicEnvironmentAndStaticPlaceholders (0.00s)
+=== RUN   TestADocumentThatAnswersNoSubmissionHasNoFormSlot
+--- PASS: TestADocumentThatAnswersNoSubmissionHasNoFormSlot (0.00s)
+=== RUN   TestDocumentCarriesTheDeferredPlaceholderAndKitsPlumbing
+--- PASS: TestDocumentCarriesTheDeferredPlaceholderAndKitsPlumbing (0.00s)
+=== RUN   TestADocumentWithNothingOutstandingCarriesNoPlumbing
+--- PASS: TestADocumentWithNothingOutstandingCarriesNoPlumbing (0.00s)
+=== RUN   TestATransportedValueStreamsThroughTheAppsDecoder
+--- PASS: TestATransportedValueStreamsThroughTheAppsDecoder (0.00s)
+=== RUN   TestADeferredValueThatFailedStreamsAsAHoleAndAnError
+--- PASS: TestADeferredValueThatFailedStreamsAsAHoleAndAnError (0.00s)
+=== RUN   TestAssembledDocumentShowsWhatTheHandleErrorHookReturnedForADeferredFailure
+--- PASS: TestAssembledDocumentShowsWhatTheHandleErrorHookReturnedForADeferredFailure (0.00s)
+=== RUN   TestAStreamedDocumentCarriesNeitherTheStatusNorAnEtag
+--- PASS: TestAStreamedDocumentCarriesNeitherTheStatusNorAnEtag (0.02s)
+=== RUN   TestAPromisedValueCrossesIntoTheEngineAsAPromise
+--- PASS: TestAPromisedValueCrossesIntoTheEngineAsAPromise (0.00s)
+=== RUN   TestDocumentErrorWithNoHookKeepsTheFallbackExactly
+--- PASS: TestDocumentErrorWithNoHookKeepsTheFallbackExactly (0.00s)
+=== RUN   TestDocumentErrorConsultsTheHookForAnAppRaisedErrorToo
+--- PASS: TestDocumentErrorConsultsTheHookForAnAppRaisedErrorToo (0.00s)
+=== RUN   TestDocumentErrorClassifiesAnOrdinaryGoErrorAsUnknown
+--- PASS: TestDocumentErrorClassifiesAnOrdinaryGoErrorAsUnknown (0.00s)
+=== RUN   TestDocumentErrorOverridesStatusToo
+--- PASS: TestDocumentErrorOverridesStatusToo (0.00s)
+=== RUN   TestDocumentErrorRecoversAPanickingHook
+2026/10/08 01:58:28 skgo: rendering /x: skgo: the handleError hook panicked: the hook itself has a bug
+goroutine 86 [running]:
+runtime/debug.Stack()
+	/opt/homebrew/Cellar/go/1.27.1/libexec/src/runtime/debug/stack.go:26 +0x64
+github.com/tylergannon/skgo.runHandleError.func1()
+	/Users/tyler/.codex/worktrees/zig-development-setup/devalue/ephemeral/consumer-scratch.zr0xC6/skgo/handle_error.go:130 +0x48
+panic({0x105a45650?, 0x10593e090?})
+	/opt/homebrew/Cellar/go/1.27.1/libexec/src/runtime/panic.go:859 +0x120
+github.com/tylergannon/skgo.TestDocumentErrorRecoversAPanickingHook.func1({0x5?, 0x648ba0058970?}, {{0x105af9dc0, 0x648ba0016640}, 0x648ba0058968, {0x3c, 0x0}, {0x36, 0x648ba0058988}})
+	/Users/tyler/.codex/worktrees/zig-development-setup/devalue/ephemeral/consumer-scratch.zr0xC6/skgo/handle_error_test.go:102 +0x2c
+github.com/tylergannon/skgo.runHandleError({0x105b01730?, 0x105d0b360?}, {0x1051fd125?, 0x648ba0002060?}, 0x648ba00900c0?, {{0x1051fd377, 0x3}, 0x1a2, {0x105210688, 0x15}, ...}, ...)
+	/Users/tyler/.codex/worktrees/zig-development-setup/devalue/ephemeral/consumer-scratch.zr0xC6/skgo/handle_error.go:143 +0x8c
+github.com/tylergannon/skgo.handleErrorAndJSONify({0x105b01730, 0x105d0b360}, {0x1051fd125, 0x2}, 0x105b0b7d8, 0x648ba0058ad0, {0x0, 0x0}, 0x648ba0058f48)
+	/Users/tyler/.codex/worktrees/zig-development-setup/devalue/ephemeral/consumer-scratch.zr0xC6/skgo/handle_error.go:122 +0x178
+github.com/tylergannon/skgo.(*SSR).documentError(...)
+	/Users/tyler/.codex/worktrees/zig-development-setup/devalue/ephemeral/consumer-scratch.zr0xC6/skgo/handle_error.go:92
+github.com/tylergannon/skgo.TestDocumentErrorRecoversAPanickingHook(0x648ba0034d88)
+	/Users/tyler/.codex/worktrees/zig-development-setup/devalue/ephemeral/consumer-scratch.zr0xC6/skgo/handle_error_test.go:105 +0xfc
+testing.tRunner(0x648ba0034d88, 0x105b0acb8)
+	/opt/homebrew/Cellar/go/1.27.1/libexec/src/testing/testing.go:2193 +0xc4
+created by testing.(*T).Run in goroutine 1
+	/opt/homebrew/Cellar/go/1.27.1/libexec/src/testing/testing.go:2258 +0x3b8
+--- PASS: TestDocumentErrorRecoversAPanickingHook (0.00s)
+=== RUN   TestMiddlewareStreamsTheFirstChunkBeforeALaterValueResolves
+--- PASS: TestMiddlewareStreamsTheFirstChunkBeforeALaterValueResolves (0.00s)
+=== RUN   TestPrerenderEndCancelsDeferredCallbackAndReleasesState
+--- PASS: TestPrerenderEndCancelsDeferredCallbackAndReleasesState (0.00s)
+=== RUN   TestPrerenderServiceLoadSettlesTransportedDeferredValue
+--- PASS: TestPrerenderServiceLoadSettlesTransportedDeferredValue (0.00s)
+=== RUN   TestLiveStreamCountsOnlyWhatTheOpeningRequestMaySee
+--- PASS: TestLiveStreamCountsOnlyWhatTheOpeningRequestMaySee (0.30s)
+=== RUN   TestLiveStreamSendsOneFrameForEachCommand
+--- PASS: TestLiveStreamSendsOneFrameForEachCommand (0.30s)
+=== RUN   TestOpenLiveStreamKeepsTheIdentityItOpenedWith
+--- PASS: TestOpenLiveStreamKeepsTheIdentityItOpenedWith (0.61s)
+=== RUN   TestReconnectedLiveStreamAgreesWithTheSeedExactlyOnce
+--- PASS: TestReconnectedLiveStreamAgreesWithTheSeedExactlyOnce (0.30s)
+=== RUN   TestConcurrentInternalFetchesStreamIndependently
+=== RUN   TestConcurrentInternalFetchesStreamIndependently/wrapping_middleware
+=== RUN   TestConcurrentInternalFetchesStreamIndependently/no_middleware
+--- PASS: TestConcurrentInternalFetchesStreamIndependently (0.00s)
+    --- PASS: TestConcurrentInternalFetchesStreamIndependently/wrapping_middleware (0.00s)
+    --- PASS: TestConcurrentInternalFetchesStreamIndependently/no_middleware (0.00s)
+=== RUN   TestNestedInternalFetchStreamsThroughEachLevelAtDepth
+=== RUN   TestNestedInternalFetchStreamsThroughEachLevelAtDepth/no_middleware
+=== RUN   TestNestedInternalFetchStreamsThroughEachLevelAtDepth/wrapping_middleware
+--- PASS: TestNestedInternalFetchStreamsThroughEachLevelAtDepth (0.00s)
+    --- PASS: TestNestedInternalFetchStreamsThroughEachLevelAtDepth/no_middleware (0.00s)
+    --- PASS: TestNestedInternalFetchStreamsThroughEachLevelAtDepth/wrapping_middleware (0.00s)
+=== RUN   TestResolveOptionsTransformPageChunkRunsOnceDoneOnTheAssembledDocument
+--- PASS: TestResolveOptionsTransformPageChunkRunsOnceDoneOnTheAssembledDocument (0.00s)
+=== RUN   TestResolveOptionsEtagFollowsTheTransformedDocumentAndStaysConditional
+--- PASS: TestResolveOptionsEtagFollowsTheTransformedDocumentAndStaysConditional (0.00s)
+=== RUN   TestResolveOptionsTransformsErrorDocumentAndSPAShellButNotStaticOrOtherResponses
+--- PASS: TestResolveOptionsTransformsErrorDocumentAndSPAShellButNotStaticOrOtherResponses (0.00s)
+=== RUN   TestStaticHandlerKnownRoutesServeBootDocument
+--- PASS: TestStaticHandlerKnownRoutesServeBootDocument (0.00s)
+=== RUN   TestStaticHandlerUnknownPathServesBootDocumentWith404
+--- PASS: TestStaticHandlerUnknownPathServesBootDocumentWith404 (0.00s)
+=== RUN   TestTheDocumentAnswersItsOwnETag
+--- PASS: TestTheDocumentAnswersItsOwnETag (0.00s)
+=== RUN   TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt
+=== RUN   TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/the_exact_validator
+=== RUN   TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/a_list_containing_it
+=== RUN   TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/the_weak_form_of_it
+=== RUN   TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/any_validator_at_all
+=== RUN   TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/a_stale_validator
+=== RUN   TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/nothing_offered
+--- PASS: TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt (0.00s)
+    --- PASS: TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/the_exact_validator (0.00s)
+    --- PASS: TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/a_list_containing_it (0.00s)
+    --- PASS: TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/the_weak_form_of_it (0.00s)
+    --- PASS: TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/any_validator_at_all (0.00s)
+    --- PASS: TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/a_stale_validator (0.00s)
+    --- PASS: TestTheDocumentETagIsComparedTheWayHTTPSaysToCompareIt/nothing_offered (0.00s)
+=== RUN   TestADataRequestIsNeverAnsweredWithTheDocument
+=== RUN   TestADataRequestIsNeverAnsweredWithTheDocument//about/__data.json
+=== RUN   TestADataRequestIsNeverAnsweredWithTheDocument//__data.json
+=== RUN   TestADataRequestIsNeverAnsweredWithTheDocument//items/7/__data.json
+=== RUN   TestADataRequestIsNeverAnsweredWithTheDocument//docs/a/b/__data.json
+=== RUN   TestADataRequestIsNeverAnsweredWithTheDocument//about.html__data.json
+=== RUN   TestADataRequestIsNeverAnsweredWithTheDocument//no-such-page/__data.json
+--- PASS: TestADataRequestIsNeverAnsweredWithTheDocument (0.00s)
+    --- PASS: TestADataRequestIsNeverAnsweredWithTheDocument//about/__data.json (0.00s)
+    --- PASS: TestADataRequestIsNeverAnsweredWithTheDocument//__data.json (0.00s)
+    --- PASS: TestADataRequestIsNeverAnsweredWithTheDocument//items/7/__data.json (0.00s)
+    --- PASS: TestADataRequestIsNeverAnsweredWithTheDocument//docs/a/b/__data.json (0.00s)
+    --- PASS: TestADataRequestIsNeverAnsweredWithTheDocument//about.html__data.json (0.00s)
+    --- PASS: TestADataRequestIsNeverAnsweredWithTheDocument//no-such-page/__data.json (0.00s)
+=== RUN   TestARouteResolutionRequestIsNeverAnsweredWithTheDocument
+--- PASS: TestARouteResolutionRequestIsNeverAnsweredWithTheDocument (0.00s)
+=== CONT  TestWireEmitsDevalueBytes
+=== CONT  TestWireAcceptsDevalueBytes
+=== RUN   TestWireEmitsDevalueBytes/object
+=== RUN   TestWireAcceptsDevalueBytes/object
+=== PAUSE TestWireAcceptsDevalueBytes/object
+=== RUN   TestWireAcceptsDevalueBytes/object_reordered
+=== PAUSE TestWireAcceptsDevalueBytes/object_reordered
+=== RUN   TestWireAcceptsDevalueBytes/empty_object
+=== PAUSE TestWireEmitsDevalueBytes/object
+=== PAUSE TestWireAcceptsDevalueBytes/empty_object
+=== RUN   TestWireAcceptsDevalueBytes/null_prototype_object
+=== PAUSE TestWireAcceptsDevalueBytes/null_prototype_object
+=== RUN   TestWireEmitsDevalueBytes/object_reordered
+=== PAUSE TestWireEmitsDevalueBytes/object_reordered
+=== RUN   TestWireAcceptsDevalueBytes/nested_object
+=== RUN   TestWireEmitsDevalueBytes/empty_object
+=== PAUSE TestWireEmitsDevalueBytes/empty_object
+=== PAUSE TestWireAcceptsDevalueBytes/nested_object
+=== RUN   TestWireAcceptsDevalueBytes/integer-like_keys
+=== PAUSE TestWireAcceptsDevalueBytes/integer-like_keys
+=== RUN   TestWireAcceptsDevalueBytes/array
+=== PAUSE TestWireAcceptsDevalueBytes/array
+=== RUN   TestWireAcceptsDevalueBytes/empty_array
+=== PAUSE TestWireAcceptsDevalueBytes/empty_array
+=== RUN   TestWireEmitsDevalueBytes/null_prototype_object
+=== PAUSE TestWireEmitsDevalueBytes/null_prototype_object
+=== RUN   TestWireAcceptsDevalueBytes/sparse_array
+=== PAUSE TestWireAcceptsDevalueBytes/sparse_array
+=== RUN   TestWireAcceptsDevalueBytes/array_with_undefined
+=== PAUSE TestWireAcceptsDevalueBytes/array_with_undefined
+=== RUN   TestWireEmitsDevalueBytes/nested_object
+=== RUN   TestWireAcceptsDevalueBytes/array_of_objects
+=== PAUSE TestWireAcceptsDevalueBytes/array_of_objects
+=== RUN   TestWireAcceptsDevalueBytes/map
+=== PAUSE TestWireAcceptsDevalueBytes/map
+=== RUN   TestWireAcceptsDevalueBytes/empty_map
+=== PAUSE TestWireAcceptsDevalueBytes/empty_map
+=== RUN   TestWireAcceptsDevalueBytes/map_with_object_keys
+=== PAUSE TestWireAcceptsDevalueBytes/map_with_object_keys
+=== PAUSE TestWireEmitsDevalueBytes/nested_object
+=== RUN   TestWireEmitsDevalueBytes/integer-like_keys
+=== RUN   TestWireAcceptsDevalueBytes/set
+=== PAUSE TestWireAcceptsDevalueBytes/set
+=== PAUSE TestWireEmitsDevalueBytes/integer-like_keys
+=== RUN   TestWireEmitsDevalueBytes/array
+=== PAUSE TestWireEmitsDevalueBytes/array
+=== RUN   TestWireAcceptsDevalueBytes/empty_set
+=== PAUSE TestWireAcceptsDevalueBytes/empty_set
+=== RUN   TestWireEmitsDevalueBytes/empty_array
+=== PAUSE TestWireEmitsDevalueBytes/empty_array
+=== RUN   TestWireAcceptsDevalueBytes/set_of_strings
+=== PAUSE TestWireAcceptsDevalueBytes/set_of_strings
+=== RUN   TestWireEmitsDevalueBytes/sparse_array
+=== PAUSE TestWireEmitsDevalueBytes/sparse_array
+=== RUN   TestWireEmitsDevalueBytes/array_with_undefined
+=== PAUSE TestWireEmitsDevalueBytes/array_with_undefined
+=== RUN   TestWireEmitsDevalueBytes/array_of_objects
+=== PAUSE TestWireEmitsDevalueBytes/array_of_objects
+=== RUN   TestWireEmitsDevalueBytes/map
+=== PAUSE TestWireEmitsDevalueBytes/map
+=== RUN   TestWireEmitsDevalueBytes/empty_map
+=== PAUSE TestWireEmitsDevalueBytes/empty_map
+=== RUN   TestWireAcceptsDevalueBytes/date
+=== PAUSE TestWireAcceptsDevalueBytes/date
+=== RUN   TestWireAcceptsDevalueBytes/date_epoch
+=== PAUSE TestWireAcceptsDevalueBytes/date_epoch
+=== RUN   TestWireAcceptsDevalueBytes/bigint
+=== RUN   TestWireEmitsDevalueBytes/map_with_object_keys
+=== PAUSE TestWireEmitsDevalueBytes/map_with_object_keys
+=== RUN   TestWireEmitsDevalueBytes/set
+=== PAUSE TestWireEmitsDevalueBytes/set
+=== RUN   TestWireEmitsDevalueBytes/empty_set
+=== PAUSE TestWireEmitsDevalueBytes/empty_set
+=== RUN   TestWireEmitsDevalueBytes/set_of_strings
+=== PAUSE TestWireEmitsDevalueBytes/set_of_strings
+=== RUN   TestWireEmitsDevalueBytes/date
+=== PAUSE TestWireEmitsDevalueBytes/date
+=== RUN   TestWireEmitsDevalueBytes/date_epoch
+=== PAUSE TestWireEmitsDevalueBytes/date_epoch
+=== PAUSE TestWireAcceptsDevalueBytes/bigint
+=== RUN   TestWireAcceptsDevalueBytes/bigint_negative
+=== RUN   TestWireEmitsDevalueBytes/bigint
+=== PAUSE TestWireEmitsDevalueBytes/bigint
+=== RUN   TestWireEmitsDevalueBytes/bigint_negative
+=== PAUSE TestWireEmitsDevalueBytes/bigint_negative
+=== RUN   TestWireEmitsDevalueBytes/bigint_zero
+=== PAUSE TestWireEmitsDevalueBytes/bigint_zero
+=== PAUSE TestWireAcceptsDevalueBytes/bigint_negative
+=== RUN   TestWireAcceptsDevalueBytes/bigint_zero
+=== RUN   TestWireEmitsDevalueBytes/regexp
+=== PAUSE TestWireEmitsDevalueBytes/regexp
+=== RUN   TestWireEmitsDevalueBytes/regexp_no_flags
+=== PAUSE TestWireEmitsDevalueBytes/regexp_no_flags
+=== PAUSE TestWireAcceptsDevalueBytes/bigint_zero
+=== RUN   TestWireAcceptsDevalueBytes/regexp
+=== PAUSE TestWireAcceptsDevalueBytes/regexp
+=== RUN   TestWireAcceptsDevalueBytes/regexp_no_flags
+=== PAUSE TestWireAcceptsDevalueBytes/regexp_no_flags
+=== RUN   TestWireEmitsDevalueBytes/arraybuffer
+=== PAUSE TestWireEmitsDevalueBytes/arraybuffer
+=== RUN   TestWireEmitsDevalueBytes/arraybuffer_empty
+=== PAUSE TestWireEmitsDevalueBytes/arraybuffer_empty
+=== RUN   TestWireAcceptsDevalueBytes/arraybuffer
+=== PAUSE TestWireAcceptsDevalueBytes/arraybuffer
+=== RUN   TestWireAcceptsDevalueBytes/arraybuffer_empty
+=== PAUSE TestWireAcceptsDevalueBytes/arraybuffer_empty
+=== RUN   TestWireEmitsDevalueBytes/boxed_number
+=== PAUSE TestWireEmitsDevalueBytes/boxed_number
+=== RUN   TestWireAcceptsDevalueBytes/boxed_number
+=== PAUSE TestWireAcceptsDevalueBytes/boxed_number
+=== RUN   TestWireAcceptsDevalueBytes/boxed_string
+=== PAUSE TestWireAcceptsDevalueBytes/boxed_string
+=== RUN   TestWireEmitsDevalueBytes/boxed_string
+=== PAUSE TestWireEmitsDevalueBytes/boxed_string
+=== RUN   TestWireEmitsDevalueBytes/boxed_boolean
+=== RUN   TestWireAcceptsDevalueBytes/boxed_boolean
+=== PAUSE TestWireAcceptsDevalueBytes/boxed_boolean
+=== RUN   TestWireAcceptsDevalueBytes/undefined
+=== PAUSE TestWireAcceptsDevalueBytes/undefined
+=== PAUSE TestWireEmitsDevalueBytes/boxed_boolean
+=== RUN   TestWireEmitsDevalueBytes/undefined
+=== PAUSE TestWireEmitsDevalueBytes/undefined
+=== RUN   TestWireEmitsDevalueBytes/null
+=== RUN   TestWireAcceptsDevalueBytes/null
+=== PAUSE TestWireAcceptsDevalueBytes/null
+=== PAUSE TestWireEmitsDevalueBytes/null
+=== RUN   TestWireEmitsDevalueBytes/nan
+=== PAUSE TestWireEmitsDevalueBytes/nan
+=== RUN   TestWireEmitsDevalueBytes/infinity
+=== PAUSE TestWireEmitsDevalueBytes/infinity
+=== RUN   TestWireEmitsDevalueBytes/negative_infinity
+=== RUN   TestWireAcceptsDevalueBytes/nan
+=== PAUSE TestWireAcceptsDevalueBytes/nan
+=== RUN   TestWireAcceptsDevalueBytes/infinity
+=== PAUSE TestWireEmitsDevalueBytes/negative_infinity
+=== PAUSE TestWireAcceptsDevalueBytes/infinity
+=== RUN   TestWireEmitsDevalueBytes/negative_zero
+=== RUN   TestWireAcceptsDevalueBytes/negative_infinity
+=== PAUSE TestWireAcceptsDevalueBytes/negative_infinity
+=== RUN   TestWireAcceptsDevalueBytes/negative_zero
+=== PAUSE TestWireAcceptsDevalueBytes/negative_zero
+=== RUN   TestWireAcceptsDevalueBytes/string_with_escapes
+=== PAUSE TestWireAcceptsDevalueBytes/string_with_escapes
+=== RUN   TestWireAcceptsDevalueBytes/string_astral
+=== PAUSE TestWireAcceptsDevalueBytes/string_astral
+=== PAUSE TestWireEmitsDevalueBytes/negative_zero
+=== RUN   TestWireEmitsDevalueBytes/string_with_escapes
+=== PAUSE TestWireEmitsDevalueBytes/string_with_escapes
+=== RUN   TestWireEmitsDevalueBytes/string_astral
+=== PAUSE TestWireEmitsDevalueBytes/string_astral
+=== RUN   TestWireEmitsDevalueBytes/cycle_and_repeated_reference
+=== RUN   TestWireAcceptsDevalueBytes/cycle_and_repeated_reference
+=== PAUSE TestWireAcceptsDevalueBytes/cycle_and_repeated_reference
+=== PAUSE TestWireEmitsDevalueBytes/cycle_and_repeated_reference
+=== RUN   TestWireEmitsDevalueBytes/everything_nested
+=== RUN   TestWireAcceptsDevalueBytes/everything_nested
+=== PAUSE TestWireAcceptsDevalueBytes/everything_nested
+=== CONT  TestWireAcceptsDevalueBytes/object
+=== CONT  TestWireAcceptsDevalueBytes/everything_nested
+=== PAUSE TestWireEmitsDevalueBytes/everything_nested
+=== CONT  TestWireAcceptsDevalueBytes/bigint_negative
+=== CONT  TestWireAcceptsDevalueBytes/null
+=== CONT  TestWireAcceptsDevalueBytes/undefined
+=== CONT  TestWireAcceptsDevalueBytes/arraybuffer_empty
+=== CONT  TestWireAcceptsDevalueBytes/nan
+=== CONT  TestWireAcceptsDevalueBytes/boxed_number
+=== CONT  TestWireAcceptsDevalueBytes/array_of_objects
+=== CONT  TestWireAcceptsDevalueBytes/bigint
+=== CONT  TestWireAcceptsDevalueBytes/date_epoch
+=== CONT  TestWireAcceptsDevalueBytes/boxed_boolean
+=== CONT  TestWireAcceptsDevalueBytes/date
+=== CONT  TestWireAcceptsDevalueBytes/empty_set
+=== CONT  TestWireAcceptsDevalueBytes/map_with_object_keys
+=== CONT  TestWireAcceptsDevalueBytes/set_of_strings
+=== CONT  TestWireAcceptsDevalueBytes/empty_map
+=== CONT  TestWireAcceptsDevalueBytes/map
+=== CONT  TestWireAcceptsDevalueBytes/arraybuffer
+=== CONT  TestWireAcceptsDevalueBytes/regexp_no_flags
+=== CONT  TestWireAcceptsDevalueBytes/bigint_zero
+=== CONT  TestWireAcceptsDevalueBytes/negative_zero
+=== CONT  TestWireAcceptsDevalueBytes/integer-like_keys
+=== CONT  TestWireAcceptsDevalueBytes/array_with_undefined
+=== CONT  TestWireAcceptsDevalueBytes/negative_infinity
+=== CONT  TestWireAcceptsDevalueBytes/empty_array
+=== CONT  TestWireAcceptsDevalueBytes/array
+=== CONT  TestWireAcceptsDevalueBytes/null_prototype_object
+=== CONT  TestWireAcceptsDevalueBytes/empty_object
+=== CONT  TestWireAcceptsDevalueBytes/object_reordered
+=== CONT  TestWireAcceptsDevalueBytes/cycle_and_repeated_reference
+=== CONT  TestWireEmitsDevalueBytes/bigint_negative
+=== CONT  TestWireEmitsDevalueBytes/everything_nested
+=== CONT  TestWireAcceptsDevalueBytes/boxed_string
+=== CONT  TestWireEmitsDevalueBytes/cycle_and_repeated_reference
+=== CONT  TestWireEmitsDevalueBytes/string_astral
+=== CONT  TestWireEmitsDevalueBytes/string_with_escapes
+=== CONT  TestWireEmitsDevalueBytes/negative_zero
+=== CONT  TestWireEmitsDevalueBytes/negative_infinity
+=== CONT  TestWireEmitsDevalueBytes/bigint
+=== CONT  TestWireEmitsDevalueBytes/infinity
+=== CONT  TestWireEmitsDevalueBytes/date_epoch
+=== CONT  TestWireEmitsDevalueBytes/nan
+=== CONT  TestWireEmitsDevalueBytes/date
+=== CONT  TestWireEmitsDevalueBytes/null
+=== CONT  TestWireAcceptsDevalueBytes/string_astral
+=== CONT  TestWireEmitsDevalueBytes/undefined
+=== CONT  TestWireEmitsDevalueBytes/empty_set
+=== CONT  TestWireEmitsDevalueBytes/boxed_boolean
+=== CONT  TestWireEmitsDevalueBytes/set
+=== CONT  TestWireEmitsDevalueBytes/boxed_string
+=== CONT  TestWireAcceptsDevalueBytes/set
+=== CONT  TestWireEmitsDevalueBytes/boxed_number
+=== CONT  TestWireEmitsDevalueBytes/empty_map
+=== CONT  TestWireAcceptsDevalueBytes/string_with_escapes
+=== CONT  TestWireAcceptsDevalueBytes/regexp
+=== CONT  TestWireEmitsDevalueBytes/map
+=== CONT  TestWireEmitsDevalueBytes/empty_object
+=== CONT  TestWireEmitsDevalueBytes/regexp_no_flags
+=== CONT  TestWireEmitsDevalueBytes/nested_object
+=== CONT  TestWireEmitsDevalueBytes/arraybuffer
+=== CONT  TestWireEmitsDevalueBytes/null_prototype_object
+=== CONT  TestWireEmitsDevalueBytes/regexp
+=== CONT  TestWireEmitsDevalueBytes/bigint_zero
+=== CONT  TestWireEmitsDevalueBytes/empty_array
+=== CONT  TestWireEmitsDevalueBytes/array_with_undefined
+=== CONT  TestWireEmitsDevalueBytes/integer-like_keys
+=== CONT  TestWireEmitsDevalueBytes/object_reordered
+=== CONT  TestWireEmitsDevalueBytes/array
+=== CONT  TestWireEmitsDevalueBytes/sparse_array
+=== CONT  TestWireEmitsDevalueBytes/object
+=== CONT  TestWireEmitsDevalueBytes/array_of_objects
+=== CONT  TestWireEmitsDevalueBytes/set_of_strings
+=== CONT  TestWireEmitsDevalueBytes/map_with_object_keys
+=== CONT  TestWireEmitsDevalueBytes/arraybuffer_empty
+--- PASS: TestWireEmitsDevalueBytes (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/bigint_negative (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/everything_nested (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/string_astral (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/cycle_and_repeated_reference (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/string_with_escapes (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/negative_zero (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/negative_infinity (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/bigint (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/infinity (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/date_epoch (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/nan (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/date (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/null (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/undefined (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/empty_set (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/boxed_boolean (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/set (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/boxed_string (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/boxed_number (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/empty_map (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/map (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/empty_object (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/regexp_no_flags (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/nested_object (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/arraybuffer (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/null_prototype_object (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/regexp (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/bigint_zero (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/empty_array (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/array_with_undefined (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/integer-like_keys (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/object_reordered (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/array (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/sparse_array (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/object (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/array_of_objects (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/set_of_strings (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/map_with_object_keys (0.00s)
+    --- PASS: TestWireEmitsDevalueBytes/arraybuffer_empty (0.00s)
+=== CONT  TestWireAcceptsDevalueBytes/sparse_array
+=== CONT  TestWireAcceptsDevalueBytes/nested_object
+=== CONT  TestWireAcceptsDevalueBytes/infinity
+--- PASS: TestWireAcceptsDevalueBytes (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/object (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/bigint_negative (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/null (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/undefined (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/arraybuffer_empty (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/nan (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/everything_nested (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/boxed_number (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/bigint (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/date_epoch (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/array_of_objects (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/boxed_boolean (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/date (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/empty_set (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/map_with_object_keys (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/set_of_strings (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/empty_map (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/map (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/arraybuffer (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/regexp_no_flags (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/bigint_zero (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/negative_zero (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/integer-like_keys (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/array_with_undefined (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/negative_infinity (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/empty_array (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/array (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/null_prototype_object (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/empty_object (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/object_reordered (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/cycle_and_repeated_reference (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/boxed_string (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/string_astral (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/set (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/string_with_escapes (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/regexp (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/sparse_array (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/nested_object (0.00s)
+    --- PASS: TestWireAcceptsDevalueBytes/infinity (0.00s)
+PASS
