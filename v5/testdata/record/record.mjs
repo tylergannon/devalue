@@ -8,6 +8,7 @@ import { stringify, uneval } from "devalue";
 import { values } from "./values.mjs";
 import { zigValues } from "./zig-values.mjs";
 import { upstreamValues } from "./upstream-values.mjs";
+import { binaryValues, fileInput, browserWire } from "./binary-values.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -41,6 +42,13 @@ const upstreamCases = upstreamValues.map(([name, value, reducers]) => ({ name, d
 writeFileSync(join(here, "..", "..", "..", "zig", "testdata", "upstream-flat-golden.json"),
   JSON.stringify({ devalue: installed, cases: upstreamCases }, null, 2) + "\n");
 process.stdout.write(`wrote ${upstreamCases.length} upstream-native cases from devalue ${installed}\n`);
+
+const binaryCases = binaryValues.map(([name, value, reducers]) => ({ name, devalue: stringify(value, reducers) }));
+binaryCases.push({name: "browser_uint8", devalue: browserWire});
+writeFileSync(join(here, "..", "..", "..", "zig", "testdata", "binary-golden.json"),
+  JSON.stringify({ devalue: installed, cases: binaryCases }, null, 2) + "\n");
+writeFileSync(join(here, "..", "..", "..", "zig", "tests", "binary-file-input.txt"), fileInput);
+process.stdout.write(`wrote ${binaryCases.length} binary cases from devalue ${installed}\n`);
 
 // installedVersion reads the version of the devalue package that the import
 // above resolved to. Its exports map hides package.json, so walk up from the

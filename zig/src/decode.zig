@@ -29,7 +29,7 @@ pub fn parse(gpa: std.mem.Allocator, bytes: []const u8, revivers: []const d.Revi
 }
 fn constructionError(err: d.Error) d.Error {
     return switch (err) {
-        error.UnsupportedValue, error.UnsupportedString => error.InvalidDocument,
+        error.UnsupportedValue, error.UnsupportedString, error.InvalidType => error.InvalidDocument,
         else => err,
     };
 }
@@ -58,6 +58,11 @@ const Decoder = struct {
     }
     fn child(self: *Decoder, token: usize, n: usize) d.Error!usize {
         return self.tape.child(token, n);
+    }
+    fn bound(self: *Decoder, token: usize) d.Error!usize {
+        const f = try self.tape.number(token);
+        if (!std.math.isFinite(f) or @trunc(f) != f or f < 0 or f > 9007199254740991.0 or f > @as(f64, @floatFromInt(std.math.maxInt(usize)))) return error.InvalidDocument;
+        return @intFromFloat(f);
     }
     fn hydrate(self: *Decoder, index: i64, standalone: bool, depth: usize) d.Error!d.Value {
         switch (index) {
@@ -203,7 +208,29 @@ const Decoder = struct {
                         }
                         break :blk target;
                     }
-                    for ([_][]const u8{ "URL", "URLSearchParams", "DataView", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Float16Array", "Int32Array", "Uint32Array", "Float32Array", "Float64Array", "BigInt64Array", "BigUint64Array", "Temporal.Duration", "Temporal.Instant", "Temporal.PlainDate", "Temporal.PlainTime", "Temporal.PlainDateTime", "Temporal.PlainMonthDay", "Temporal.PlainYearMonth", "Temporal.ZonedDateTime" }) |excluded| if (std.mem.eql(u8, tag, excluded)) return error.UnsupportedValue;
+                    const typed_kind = std.meta.stringToEnum(d.TypedArrayKind, tag);
+                    if (typed_kind != null or std.mem.eql(u8, tag, "DataView")) {
+                        if (atom.children < 2 or atom.children > 4) return error.InvalidDocument;
+                        const bi = try self.tape.reference(try self.child(token, 1));
+                        if (bi < 0 or bi >= self.values.items.len) return error.InvalidDocument;
+                        const raw = self.values.items[@intCast(bi)];
+                        if (self.tape.atoms[raw].token != .array_begin or self.tape.atoms[raw].children == 0) return error.InvalidDocument;
+                        const raw_tag = self.tape.string(try self.child(raw, 0)) catch return error.InvalidDocument;
+                        // Guard raw slots before hydration or callbacks: array-like
+                        // values and view cycles can never become backing stores.
+                        if (!std.mem.eql(u8, raw_tag, "ArrayBuffer")) return error.InvalidDocument;
+                        const buffer = try self.hydrate(bi, false, depth + 1);
+                        const backing = self.graph.node(buffer) catch |err| return constructionError(err);
+                        if (backing != .array_buffer) return error.InvalidDocument;
+                        const width = if (typed_kind) |kind| kind.bytesPerElement() else 1;
+                        const offset = if (atom.children >= 3) try self.bound(try self.child(token, 2)) else 0;
+                        if (offset > backing.array_buffer.len or offset % width != 0) return error.InvalidDocument;
+                        const remaining = backing.array_buffer.len - offset;
+                        if (atom.children < 4 and remaining % width != 0) return error.InvalidDocument;
+                        const length = if (atom.children == 4) try self.bound(try self.child(token, 3)) else remaining / width;
+                        break :blk (if (typed_kind) |kind| self.graph.typedArray(kind, buffer, offset, length) else self.graph.dataView(buffer, offset, length)) catch |err| return constructionError(err);
+                    }
+                    for ([_][]const u8{ "URL", "URLSearchParams", "Temporal.Duration", "Temporal.Instant", "Temporal.PlainDate", "Temporal.PlainTime", "Temporal.PlainDateTime", "Temporal.PlainMonthDay", "Temporal.PlainYearMonth", "Temporal.ZonedDateTime" }) |excluded| if (std.mem.eql(u8, tag, excluded)) return error.UnsupportedValue;
                     return error.InvalidDocument;
                 }
                 const sparse = atom.children > 0 and ((self.tape.atoms[first].token == .number or self.tape.atoms[first].token == .allocated_number) and (try self.tape.number(first)) == -7);

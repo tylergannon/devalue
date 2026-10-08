@@ -1,0 +1,31 @@
+const std = @import("std");
+const d = @import("devalue");
+pub fn main(init: std.process.Init) !void {
+    var g = d.Graph.init(init.gpa);
+    defer g.deinit();
+    const buffer = try g.arrayBuffer(&.{ 0, 1, 2, 3, 4, 5, 6, 7 });
+    const typed = try g.typedArray(.Float16Array, buffer, 2, 2);
+    const data = try g.dataView(buffer, 1, 3);
+    const root = try g.object(false);
+    try g.put(root, "buffer", buffer);
+    try g.put(root, "typed", typed);
+    try g.put(root, "again", typed);
+    try g.put(root, "data", data);
+    try g.put(root, "copy", try g.uint8ArrayCopy(try g.viewBytes(typed)));
+    try g.put(root, "self", root);
+    const wire = try d.stringify(init.gpa, &g, root, &.{});
+    defer init.gpa.free(wire);
+    var r = try d.parse(init.gpa, wire, &.{});
+    defer r.deinit();
+    const b = (try r.graph.get(r.value, "buffer")).?;
+    const v = (try r.graph.get(r.value, "typed")).?;
+    const dv = (try r.graph.node((try r.graph.get(r.value, "data")).?)).data_view;
+    const tv = (try r.graph.node(v)).typed_array;
+    if (tv.kind != .Float16Array or tv.byte_offset != 2 or tv.length != 2 or dv.byte_offset != 1 or dv.byte_length != 3) return error.MetadataMismatch;
+    if (!d.equal(tv.buffer, b) or !d.equal(dv.buffer, b) or !d.equal(v, (try r.graph.get(r.value, "again")).?) or !d.equal(r.value, (try r.graph.get(r.value, "self")).?)) return error.IdentityMismatch;
+    if (!std.mem.eql(u8, try r.graph.viewBytes(v), &.{ 2, 3, 4, 5 })) return error.ByteMismatch;
+    const copy = (try r.graph.node((try r.graph.get(r.value, "copy")).?)).typed_array;
+    if (d.equal(copy.buffer, b) or (try r.graph.node(copy.buffer)).array_buffer.len != 4) return error.CopyMismatch;
+    try std.Io.File.stdout().writeStreamingAll(init.io, wire);
+    try std.Io.File.stdout().writeStreamingAll(init.io, "\n");
+}

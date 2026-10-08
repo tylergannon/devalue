@@ -161,6 +161,8 @@ const Encoder = struct {
                     try p.quote(&b, self.a, buf);
                     try p.text(&b, self.a, "]");
                 },
+                .typed_array => |view| try self.writeView(&b, @tagName(view.kind), view.buffer, view.byte_offset, view.length, view.kind.bytesPerElement(), depth),
+                .data_view => |view| try self.writeView(&b, "DataView", view.buffer, view.byte_offset, view.byte_length, 1, depth),
                 .boxed => |unboxed| {
                     try p.text(&b, self.a, "[\"Object\"");
                     try self.edge(&b, unboxed, depth);
@@ -174,5 +176,21 @@ const Encoder = struct {
     fn edge(self: *Encoder, b: *p.Buffer, v: d.Value, depth: usize) d.Error!void {
         try p.text(b, self.a, ",");
         try p.integer(b, self.a, try self.flatten(v, depth + 1));
+    }
+    fn writeView(self: *Encoder, b: *p.Buffer, tag: []const u8, buffer: d.Value, offset: usize, length: usize, width: usize, depth: usize) d.Error!void {
+        const n = try self.graph.node(buffer);
+        if (n != .array_buffer) return error.InvalidType;
+        const size = n.array_buffer.len;
+        if (offset > size or offset % width != 0 or length > (size - offset) / width) return error.InvalidType;
+        try p.text(b, self.a, "[");
+        try p.quote(b, self.a, tag);
+        try self.edge(b, buffer, depth);
+        if (length * width != size) {
+            try p.text(b, self.a, ",");
+            try p.integer(b, self.a, offset);
+            try p.text(b, self.a, ",");
+            try p.integer(b, self.a, length);
+        }
+        try p.text(b, self.a, "]");
     }
 };

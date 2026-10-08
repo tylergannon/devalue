@@ -38,7 +38,7 @@ test "malformed input and explicit profile rejection" {
             return error.ExpectedRejection;
         } else |err| try std.testing.expect(err == error.InvalidDocument);
     }
-    for ([_][]const u8{ "[[\"URL\",\"https://x\"]]", "[[\"Uint8Array\",1],[\"ArrayBuffer\",\"\"]]", "[[\"Temporal.Instant\",\"x\"]]" }) |wire| try std.testing.expectError(error.UnsupportedValue, d.parse(a, wire, &.{}));
+    for ([_][]const u8{ "[[\"URL\",\"https://x\"]]", "[[\"Temporal.Instant\",\"x\"]]" }) |wire| try std.testing.expectError(error.UnsupportedValue, d.parse(a, wire, &.{}));
     var r = try d.parse(a, "[\"\\uD83D\\uDE00\"]", &.{});
     defer r.deinit();
     try std.testing.expectEqualStrings("😀", r.value.string);
@@ -363,7 +363,7 @@ test "ordinary stringify preserves public input graph across repeated encodes" {
     }
 }
 test "mutations seeded from every shared and Zig corpus document" {
-    for ([_][]const u8{ @import("fixtures").golden_path, "testdata/flat-golden.json", "testdata/upstream-flat-golden.json" }) |path| {
+    for ([_][]const u8{ @import("fixtures").golden_path, "testdata/flat-golden.json", "testdata/upstream-flat-golden.json", "testdata/binary-golden.json" }) |path| {
         const bytes = try std.Io.Dir.cwd().readFileAlloc(std.testing.io, path, a, .limited(16 * 1024 * 1024));
         defer a.free(bytes);
         const Case = struct { name: []const u8, devalue: []const u8 };
